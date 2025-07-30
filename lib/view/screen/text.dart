@@ -750,12 +750,12 @@ class AppColors {
   static const Color textGrey = Color(0xFF666666);
 }
 
-// Custom Clipper للشكل المتموج في الجزء العلوي
+
 class WavyClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     var path = Path();
-    path.lineTo(0, size.height * 0.7); // تبدأ من اليسار وتذهب للأسفل
+    path.lineTo(0, size.height * 0.7); 
     var firstControlPoint = Offset(size.width / 4, size.height);
     var firstEndPoint = Offset(size.width / 2, size.height * 0.7);
     path.quadraticBezierTo(firstControlPoint.dx, firstControlPoint.dy,
