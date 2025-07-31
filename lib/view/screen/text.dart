@@ -528,10 +528,10 @@
 //   }
 
  
-// }
 
 
-// import 'package:flutter/material.dart';
+
+import 'package:flutter/material.dart';
 
 
 
@@ -717,8 +717,6 @@
 //     );
 //   }
 // }
-import 'package:flutter/material.dart';
-import 'package:get/get.dart'; // استيراد مكتبة GetX
 
 // void main() {
 //   runApp(const MyApp());
@@ -741,431 +739,598 @@ import 'package:get/get.dart'; // استيراد مكتبة GetX
 //   }
 // }
 
-// تعريف الألوان المخصصة لتتناسب مع التصميم
-class AppColors {
-  static const Color primaryPurple = Color(0xFF8839B3); // بنفسجي داكن نوعاً ما
-  static const Color lightPurple = Color(0xFFBB86FC); // بنفسجي فاتح للأزرار الثانوية
-  static const Color backgroundLight = Color(0xFFF0F0F0); // لون الخلفية الفاتح
-  static const Color textBlack = Color(0xFF333333);
-  static const Color textGrey = Color(0xFF666666);
-}
+// // تعريف الألوان المخصصة لتتناسب مع التصميم
+// class AppColors {
+//   static const Color primaryPurple = Color(0xFF8839B3); // بنفسجي داكن نوعاً ما
+//   static const Color lightPurple = Color(0xFFBB86FC); // بنفسجي فاتح للأزرار الثانوية
+//   static const Color backgroundLight = Color(0xFFF0F0F0); // لون الخلفية الفاتح
+//   static const Color textBlack = Color(0xFF333333);
+//   static const Color textGrey = Color(0xFF666666);
+// }
 
 
-class WavyClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    var path = Path();
-    path.lineTo(0, size.height * 0.7); 
-    var firstControlPoint = Offset(size.width / 4, size.height);
-    var firstEndPoint = Offset(size.width / 2, size.height * 0.7);
-    path.quadraticBezierTo(firstControlPoint.dx, firstControlPoint.dy,
-        firstEndPoint.dx, firstEndPoint.dy);
+// class WavyClipper extends CustomClipper<Path> {
+//   @override
+//   Path getClip(Size size) {
+//     var path = Path();
+//     path.lineTo(0, size.height * 0.7); 
+//     var firstControlPoint = Offset(size.width / 4, size.height);
+//     var firstEndPoint = Offset(size.width / 2, size.height * 0.7);
+//     path.quadraticBezierTo(firstControlPoint.dx, firstControlPoint.dy,
+//         firstEndPoint.dx, firstEndPoint.dy);
 
-    var secondControlPoint = Offset(size.width * 3 / 4, size.height * 0.4);
-    var secondEndPoint = Offset(size.width, size.height * 0.7);
-    path.quadraticBezierTo(secondControlPoint.dx, secondControlPoint.dy,
-        secondEndPoint.dx, secondEndPoint.dy);
+//     var secondControlPoint = Offset(size.width * 3 / 4, size.height * 0.4);
+//     var secondEndPoint = Offset(size.width, size.height * 0.7);
+//     path.quadraticBezierTo(secondControlPoint.dx, secondControlPoint.dy,
+//         secondEndPoint.dx, secondEndPoint.dy);
 
-    path.lineTo(size.width, 0); // تكمل للزاوية العلوية اليمنى
-    path.close(); // تغلق المسار
+//     path.lineTo(size.width, 0); // تكمل للزاوية العلوية اليمنى
+//     path.close(); // تغلق المسار
 
-    return path;
-  }
+//     return path;
+//   }
 
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
-}
+//   @override
+//   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+// }
 
-// 1. Controller باستخدام GetX
-class EditProfileController extends GetxController {
-  // controllers لحقول الإدخال
-  final TextEditingController nameController = TextEditingController(text: 'User Name');
-  final TextEditingController emailController = TextEditingController(text: 'user@example.com');
-  final TextEditingController passwordController = TextEditingController(text: '********'); // لا تعرض كلمة المرور الفعلية
+// // 1. Controller باستخدام GetX
+// class EditProfileController extends GetxController {
+//   // controllers لحقول الإدخال
+//   final TextEditingController nameController = TextEditingController(text: 'User Name');
+//   final TextEditingController emailController = TextEditingController(text: 'user@example.com');
+//   final TextEditingController passwordController = TextEditingController(text: '********'); // لا تعرض كلمة المرور الفعلية
 
-  @override
-  void onInit() {
-    super.onInit();
-    // يمكنك هنا تهيئة البيانات أو جلبها عند بدء تشغيل الـ controller
-    print("EditProfileController initialized!");
-  }
+//   @override
+//   void onInit() {
+//     super.onInit();
+//     // يمكنك هنا تهيئة البيانات أو جلبها عند بدء تشغيل الـ controller
+//     print("EditProfileController initialized!");
+//   }
 
-  @override
-  void onClose() {
-    // تخلص من الـ controllers عندما لا تكون هناك حاجة إليها
-    nameController.dispose();
-    emailController.dispose();
-    passwordController.dispose();
-    super.onClose();
-    print("EditProfileController disposed!");
-  }
+//   @override
+//   void onClose() {
+//     // تخلص من الـ controllers عندما لا تكون هناك حاجة إليها
+//     nameController.dispose();
+//     emailController.dispose();
+//     passwordController.dispose();
+//     super.onClose();
+//     print("EditProfileController disposed!");
+//   }
 
-  // منطق تغيير الصورة
-  void changeProfilePicture() {
-    Get.snackbar(
-      'تغيير الصورة',
-      'سيتم فتح معرض الصور أو الكاميرا.',
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: Colors.lightBlue,
-      colorText: Colors.white,
-    );
-    print('تغيير الصورة');
-    // أضف منطق اختيار الصورة هنا
-  }
+//   // منطق تغيير الصورة
+//   void changeProfilePicture() {
+//     Get.snackbar(
+//       'تغيير الصورة',
+//       'سيتم فتح معرض الصور أو الكاميرا.',
+//       snackPosition: SnackPosition.BOTTOM,
+//       backgroundColor: Colors.lightBlue,
+//       colorText: Colors.white,
+//     );
+//     print('تغيير الصورة');
+//     // أضف منطق اختيار الصورة هنا
+//   }
 
-  // منطق حفظ التغييرات
-  void saveChanges() {
-    Get.snackbar(
-      'حفظ التغييرات',
-      'تم حفظ بيانات الملف الشخصي.',
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: AppColors.primaryPurple,
-      colorText: Colors.white,
-    );
-    print('حفظ التغييرات');
-    print('الاسم: ${nameController.text}');
-    print('البريد الإلكتروني: ${emailController.text}');
-    // أضف منطق حفظ البيانات الفعلية (مثل استدعاء API) هنا
-    // لا تحفظ كلمة المرور مباشرة من هنا لأسباب أمنية
-  }
+//   // منطق حفظ التغييرات
+//   void saveChanges() {
+//     Get.snackbar(
+//       'حفظ التغييرات',
+//       'تم حفظ بيانات الملف الشخصي.',
+//       snackPosition: SnackPosition.BOTTOM,
+//       backgroundColor: AppColors.primaryPurple,
+//       colorText: Colors.white,
+//     );
+//     print('حفظ التغييرات');
+//     print('الاسم: ${nameController.text}');
+//     print('البريد الإلكتروني: ${emailController.text}');
+//     // أضف منطق حفظ البيانات الفعلية (مثل استدعاء API) هنا
+//     // لا تحفظ كلمة المرور مباشرة من هنا لأسباب أمنية
+//   }
 
-  // منطق تغيير كلمة المرور
-  void changePassword() {
-    Get.defaultDialog(
-      title: "تغيير كلمة المرور",
-      content: const Column(
-        children: [
-          TextField(decoration: InputDecoration(labelText: "كلمة المرور القديمة")),
-          SizedBox(height: 10),
-          TextField(decoration: InputDecoration(labelText: "كلمة المرور الجديدة")),
-          SizedBox(height: 10),
-          TextField(decoration: InputDecoration(labelText: "تأكيد كلمة المرور الجديدة")),
-        ],
-      ),
-      textConfirm: "تغيير",
-      textCancel: "إلغاء",
-      onConfirm: () {
-        // منطق تحديث كلمة المرور
-        Get.back(); // إغلاق الـ dialog
-        Get.snackbar(
-          'تغيير كلمة المرور',
-          'تم تحديث كلمة المرور بنجاح.',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.green,
-          colorText: Colors.white,
-        );
-      },
-    );
-    print('تغيير كلمة المرور');
-  }
+//   // منطق تغيير كلمة المرور
+//   void changePassword() {
+//     Get.defaultDialog(
+//       title: "تغيير كلمة المرور",
+//       content: const Column(
+//         children: [
+//           TextField(decoration: InputDecoration(labelText: "كلمة المرور القديمة")),
+//           SizedBox(height: 10),
+//           TextField(decoration: InputDecoration(labelText: "كلمة المرور الجديدة")),
+//           SizedBox(height: 10),
+//           TextField(decoration: InputDecoration(labelText: "تأكيد كلمة المرور الجديدة")),
+//         ],
+//       ),
+//       textConfirm: "تغيير",
+//       textCancel: "إلغاء",
+//       onConfirm: () {
+//         // منطق تحديث كلمة المرور
+//         Get.back(); // إغلاق الـ dialog
+//         Get.snackbar(
+//           'تغيير كلمة المرور',
+//           'تم تحديث كلمة المرور بنجاح.',
+//           snackPosition: SnackPosition.BOTTOM,
+//           backgroundColor: Colors.green,
+//           colorText: Colors.white,
+//         );
+//       },
+//     );
+//     print('تغيير كلمة المرور');
+//   }
 
-  // منطق إدارة العناوين
-  void manageAddresses() {
-    Get.snackbar(
-      'إدارة العناوين',
-      'سيتم الانتقال إلى شاشة إدارة العناوين.',
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: Colors.blueAccent,
-      colorText: Colors.white,
-    );
-    print('إدارة العناوين');
-    // أضف منطق التنقل إلى شاشة إدارة العناوين هنا
-  }
+//   // منطق إدارة العناوين
+//   void manageAddresses() {
+//     Get.snackbar(
+//       'إدارة العناوين',
+//       'سيتم الانتقال إلى شاشة إدارة العناوين.',
+//       snackPosition: SnackPosition.BOTTOM,
+//       backgroundColor: Colors.blueAccent,
+//       colorText: Colors.white,
+//     );
+//     print('إدارة العناوين');
+//     // أضف منطق التنقل إلى شاشة إدارة العناوين هنا
+//   }
 
-  // منطق تعديل التفضيلات
-  void editPreferences() {
-    Get.snackbar(
-      'تعديل التفضيلات',
-      'سيتم الانتقال إلى شاشة تعديل التفضيلات.',
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: Colors.blueAccent,
-      colorText: Colors.white,
-    );
-    print('تعديل التفضيلات');
-    // أضف منطق التنقل إلى شاشة تعديل التفضيلات هنا
-  }
-}
+//   // منطق تعديل التفضيلات
+//   void editPreferences() {
+//     Get.snackbar(
+//       'تعديل التفضيلات',
+//       'سيتم الانتقال إلى شاشة تعديل التفضيلات.',
+//       snackPosition: SnackPosition.BOTTOM,
+//       backgroundColor: Colors.blueAccent,
+//       colorText: Colors.white,
+//     );
+//     print('تعديل التفضيلات');
+//     // أضف منطق التنقل إلى شاشة تعديل التفضيلات هنا
+//   }
+// }
 
-// 2. تحديث الشاشة لتستخدم GetBuilder
-class EditProfileScreen extends StatelessWidget {
-  const EditProfileScreen({super.key});
+// // 2. تحديث الشاشة لتستخدم GetBuilder
+// class EditProfileScreen extends StatelessWidget {
+//   const EditProfileScreen({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     // تهيئة الـ controller
+//     return GetBuilder<EditProfileController>(
+//       init: EditProfileController(), // تهيئة الـ controller عند بناء الواجهة لأول مرة
+//       builder: (controller) {
+//         return Scaffold(
+//           backgroundColor: AppColors.backgroundLight,
+//           appBar: AppBar(
+//             backgroundColor: Colors.transparent,
+//             elevation: 0,
+//             leading: IconButton(
+//               icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
+//               onPressed: () {
+//                 Get.back(); // استخدام Get.back() للعودة
+//               },
+//             ),
+//             title: const Text(
+//               'تعديل البروفايل',
+//               style: TextStyle(
+//                 color: Colors.white,
+//                 fontWeight: FontWeight.bold,
+//               ),
+//             ),
+//             centerTitle: true,
+//           ),
+//           extendBodyBehindAppBar: true,
+//           body: SingleChildScrollView(
+//             child: Column(
+//               children: [
+//                 // الجزء العلوي مع الصورة والشكل المتموج
+//                 Stack(
+//                   clipBehavior: Clip.none,
+//                   alignment: Alignment.topCenter,
+//                   children: [
+//                     ClipPath(
+//                       clipper: WavyClipper(),
+//                       child: Container(
+//                         height: 250,
+//                         color: AppColors.primaryPurple,
+//                       ),
+//                     ),
+//                     Positioned(
+//                       top: 100,
+//                       child: Stack(
+//                         alignment: Alignment.bottomRight,
+//                         children: [
+//                           const CircleAvatar(
+//                             radius: 60,
+//                             backgroundColor: Colors.white,
+//                             backgroundImage: AssetImage(
+//                                 'assets/profile_placeholder.jpg'), // ضع مسار صورتك هنا
+//                           ),
+//                           Positioned(
+//                             bottom: 0,
+//                             right: 0,
+//                             child: GestureDetector(
+//                               onTap: controller
+//                                   .changeProfilePicture, // استدعاء دالة الـ controller
+//                               child: Container(
+//                                 padding: const EdgeInsets.all(6),
+//                                 decoration: const BoxDecoration(
+//                                   color: AppColors.lightPurple,
+//                                   shape: BoxShape.circle,
+//                                 ),
+//                                 child: const Icon(
+//                                   Icons.camera_alt,
+//                                   color: Colors.white,
+//                                   size: 20,
+//                                 ),
+//                               ),
+//                             ),
+//                           ),
+//                         ],
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//                 const SizedBox(height: 70),
+//                 Padding(
+//                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
+//                   child: Column(
+//                     crossAxisAlignment: CrossAxisAlignment.start,
+//                     children: [
+//                       _buildInputField(
+//                         controller: controller.nameController,
+//                         labelText: 'الاسم',
+//                         icon: Icons.person,
+//                       ),
+//                       const SizedBox(height: 20),
+//                       _buildInputField(
+//                         controller: controller.emailController,
+//                         labelText: 'البريد الإلكتروني',
+//                         icon: Icons.email,
+//                         keyboardType: TextInputType.emailAddress,
+//                       ),
+//                       const SizedBox(height: 20),
+//                       _buildPasswordInputField(
+//                         controller: controller.passwordController,
+//                         labelText: 'كلمة المرور',
+//                         icon: Icons.lock,
+//                         onPressedChangePassword:
+//                             controller.changePassword, // استدعاء دالة الـ controller
+//                       ),
+//                       const SizedBox(height: 30),
+//                       Row(
+//                         mainAxisAlignment: MainAxisAlignment.spaceAround,
+//                         children: [
+//                           _buildActionButton(
+//                             context,
+//                             icon: Icons.location_on,
+//                             label: 'إدارة العناوين',
+//                             onPressed: controller
+//                                 .manageAddresses, // استدعاء دالة الـ controller
+//                           ),
+//                           _buildActionButton(
+//                             context,
+//                             icon: Icons.settings,
+//                             label: 'تعديل التفضيلات',
+//                             onPressed: controller
+//                                 .editPreferences, // استدعاء دالة الـ controller
+//                           ),
+//                         ],
+//                       ),
+//                       const SizedBox(height: 40),
+//                       Center(
+//                         child: SizedBox(
+//                           width: double.infinity,
+//                           child: ElevatedButton(
+//                             onPressed: controller.saveChanges, // استدعاء دالة الـ controller
+//                             style: ElevatedButton.styleFrom(
+//                               backgroundColor: AppColors.primaryPurple,
+//                               foregroundColor: Colors.white,
+//                               padding: const EdgeInsets.symmetric(vertical: 15),
+//                               shape: RoundedRectangleBorder(
+//                                 borderRadius: BorderRadius.circular(10),
+//                               ),
+//                               elevation: 5,
+//                             ),
+//                             child: const Text(
+//                               'حفظ التغييرات',
+//                               style: TextStyle(
+//                                 fontSize: 18,
+//                                 fontWeight: FontWeight.bold,
+//                               ),
+//                             ),
+//                           ),
+//                         ),
+//                       ),
+//                       const SizedBox(height: 20),
+//                     ],
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           ),
+//           // لا يوجد Bottom Navigation Bar هنا
+//         );
+//       },
+//     );
+//   }
+
+//   // دوال مساعدة _buildInputField و _buildPasswordInputField و _buildActionButton
+//   // تبقى كما هي من الكود السابق، مع تعديلات بسيطة لتتناسب مع GetX
+
+//   Widget _buildInputField({
+//     required TextEditingController controller,
+//     required String labelText,
+//     required IconData icon,
+//     TextInputType keyboardType = TextInputType.text,
+//   }) {
+//     return Container(
+//       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+//       decoration: BoxDecoration(
+//         color: Colors.white,
+//         borderRadius: BorderRadius.circular(10),
+//         boxShadow: [
+//           BoxShadow(
+//             color: Colors.grey.withOpacity(0.1),
+//             spreadRadius: 1,
+//             blurRadius: 5,
+//             offset: const Offset(0, 3),
+//           ),
+//         ],
+//       ),
+//       child: TextFormField(
+//         controller: controller,
+//         keyboardType: keyboardType,
+//         style: const TextStyle(color: AppColors.textBlack),
+//         decoration: InputDecoration(
+//           labelText: labelText,
+//           labelStyle: const TextStyle(color: AppColors.textGrey),
+//           prefixIcon: Icon(icon, color: AppColors.primaryPurple),
+//           border: InputBorder.none,
+//           floatingLabelBehavior: FloatingLabelBehavior.always,
+//         ),
+//       ),
+//     );
+//   }
+
+//   Widget _buildPasswordInputField({
+//     required TextEditingController controller,
+//     required String labelText,
+//     required IconData icon,
+//     required VoidCallback onPressedChangePassword,
+//   }) {
+//     return Container(
+//       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+//       decoration: BoxDecoration(
+//         color: Colors.white,
+//         borderRadius: BorderRadius.circular(10),
+//         boxShadow: [
+//           BoxShadow(
+//             color: Colors.grey.withOpacity(0.1),
+//             spreadRadius: 1,
+//             blurRadius: 5,
+//             offset: const Offset(0, 3),
+//           ),
+//         ],
+//       ),
+//       child: TextFormField(
+//         controller: controller,
+//         obscureText: true,
+//         readOnly: true,
+//         style: const TextStyle(color: AppColors.textBlack),
+//         decoration: InputDecoration(
+//           labelText: labelText,
+//           labelStyle: const TextStyle(color: AppColors.textGrey),
+//           prefixIcon: Icon(icon, color: AppColors.primaryPurple),
+//           border: InputBorder.none,
+//           floatingLabelBehavior: FloatingLabelBehavior.always,
+//           suffixIcon: TextButton(
+//             onPressed: onPressedChangePassword,
+//             child: const Text(
+//               'تغيير كلمة المرور',
+//               style: TextStyle(color: AppColors.lightPurple, fontWeight: FontWeight.bold),
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+
+//   Widget _buildActionButton(
+//     BuildContext context, {
+//     required IconData icon,
+//     required String label,
+//     required VoidCallback onPressed,
+//   }) {
+//     return Expanded(
+//       child: Padding(
+//         padding: const EdgeInsets.symmetric(horizontal: 5.0),
+//         child: ElevatedButton(
+//           onPressed: onPressed,
+//           style: ElevatedButton.styleFrom(
+//             backgroundColor: Colors.white,
+//             foregroundColor: AppColors.primaryPurple,
+//             padding: const EdgeInsets.symmetric(vertical: 15),
+//             shape: RoundedRectangleBorder(
+//               borderRadius: BorderRadius.circular(10),
+//             ),
+//             elevation: 3,
+//             shadowColor: Colors.grey.withOpacity(0.2),
+//           ),
+//           child: Column(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             children: [
+//               Icon(icon, size: 28),
+//               const SizedBox(height: 5),
+//               Text(
+//                 label,
+//                 textAlign: TextAlign.center,
+//                 style: const TextStyle(fontSize: 14),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+
+
+class EditProfilePage extends StatelessWidget {
+  const EditProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // تهيئة الـ controller
-    return GetBuilder<EditProfileController>(
-      init: EditProfileController(), // تهيئة الـ controller عند بناء الواجهة لأول مرة
-      builder: (controller) {
-        return Scaffold(
-          backgroundColor: AppColors.backgroundLight,
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
-              onPressed: () {
-                Get.back(); // استخدام Get.back() للعودة
-              },
+    final purpleColor = Color(0xFF6A1B9A);
+
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Column(
+        children: [
+          // Header
+          Container(
+            padding: EdgeInsets.only(top: 50, left: 16, right: 16, bottom: 20),
+            decoration: BoxDecoration(
+              color: purpleColor,
+              borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
             ),
-            title: const Text(
-              'تعديل البروفايل',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            centerTitle: true,
-          ),
-          extendBodyBehindAppBar: true,
-          body: SingleChildScrollView(
             child: Column(
               children: [
-                // الجزء العلوي مع الصورة والشكل المتموج
-                Stack(
-                  clipBehavior: Clip.none,
-                  alignment: Alignment.topCenter,
+                Row(
                   children: [
-                    ClipPath(
-                      clipper: WavyClipper(),
-                      child: Container(
-                        height: 250,
-                        color: AppColors.primaryPurple,
-                      ),
-                    ),
-                    Positioned(
-                      top: 100,
-                      child: Stack(
-                        alignment: Alignment.bottomRight,
-                        children: [
-                          const CircleAvatar(
-                            radius: 60,
-                            backgroundColor: Colors.white,
-                            backgroundImage: AssetImage(
-                                'assets/profile_placeholder.jpg'), // ضع مسار صورتك هنا
-                          ),
-                          Positioned(
-                            bottom: 0,
-                            right: 0,
-                            child: GestureDetector(
-                              onTap: controller
-                                  .changeProfilePicture, // استدعاء دالة الـ controller
-                              child: Container(
-                                padding: const EdgeInsets.all(6),
-                                decoration: const BoxDecoration(
-                                  color: AppColors.lightPurple,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: const Icon(
-                                  Icons.camera_alt,
-                                  color: Colors.white,
-                                  size: 20,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                    Icon(Icons.arrow_back_ios, color: Colors.white),
+                    SizedBox(width: 10),
+                    Text(
+                      'Edit Profile',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 70),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildInputField(
-                        controller: controller.nameController,
-                        labelText: 'الاسم',
-                        icon: Icons.person,
+                SizedBox(height: 20),
+                Stack(
+                  alignment: Alignment.bottomRight,
+                  children: [
+                    CircleAvatar(
+                      radius: 50,
+                      backgroundImage: AssetImage('assets/profile.jpg'), 
+                    ),
+                    Positioned(
+                      right: 0,
+                      child: CircleAvatar(
+                        backgroundColor: Colors.white,
+                        radius: 18,
+                        child: Icon(Icons.camera_alt, color: purpleColor, size: 20),
                       ),
-                      const SizedBox(height: 20),
-                      _buildInputField(
-                        controller: controller.emailController,
-                        labelText: 'البريد الإلكتروني',
-                        icon: Icons.email,
-                        keyboardType: TextInputType.emailAddress,
-                      ),
-                      const SizedBox(height: 20),
-                      _buildPasswordInputField(
-                        controller: controller.passwordController,
-                        labelText: 'كلمة المرور',
-                        icon: Icons.lock,
-                        onPressedChangePassword:
-                            controller.changePassword, // استدعاء دالة الـ controller
-                      ),
-                      const SizedBox(height: 30),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          _buildActionButton(
-                            context,
-                            icon: Icons.location_on,
-                            label: 'إدارة العناوين',
-                            onPressed: controller
-                                .manageAddresses, // استدعاء دالة الـ controller
-                          ),
-                          _buildActionButton(
-                            context,
-                            icon: Icons.settings,
-                            label: 'تعديل التفضيلات',
-                            onPressed: controller
-                                .editPreferences, // استدعاء دالة الـ controller
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 40),
-                      Center(
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: controller.saveChanges, // استدعاء دالة الـ controller
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.primaryPurple,
-                              foregroundColor: Colors.white,
-                              padding: const EdgeInsets.symmetric(vertical: 15),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              elevation: 5,
-                            ),
-                            child: const Text(
-                              'حفظ التغييرات',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+
+          SizedBox(height: 30),
+
+          // Form Fields
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            child: Column(
+              children: [
+                _buildTextField(label: "Name"),
+                SizedBox(height: 16),
+                _buildTextField(label: "Email", suffixIcon: Icon(Icons.check_circle, color: Colors.grey)),
+                SizedBox(height: 16),
+                _buildTextField(
+                  label: "Password",
+                  obscureText: true,
+                  suffix: TextButton(
+                    onPressed: () {},
+                    child: Text("Change Password", style: TextStyle(color: purpleColor)),
+                  ),
+                ),
+                SizedBox(height: 24),
+
+                // Buttons
+                Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton(
+                        onPressed: () {},
+                        style: OutlinedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(vertical: 14),
+                          side: BorderSide(color: Colors.grey.shade300),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
                           ),
                         ),
+                        child: Text("Manage Addresses", style: TextStyle(color: Colors.black)),
                       ),
-                      const SizedBox(height: 20),
-                    ],
+                    ),
+                    SizedBox(width: 12),
+                    Expanded(
+                      child: OutlinedButton(
+                        onPressed: () {},
+                        style: OutlinedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(vertical: 14),
+                          side: BorderSide(color: Colors.grey.shade300),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: Text("Edit Preferences", style: TextStyle(color: Colors.black)),
+                      ),
+                    ),
+                  ],
+                ),
+
+                SizedBox(height: 30),
+
+                // Save Button
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: purpleColor,
+                      padding: EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                    ),
+                    child: Text("Save Changes", style: TextStyle(fontSize: 16)),
                   ),
                 ),
               ],
             ),
           ),
-          // لا يوجد Bottom Navigation Bar هنا
-        );
-      },
-    );
-  }
-
-  // دوال مساعدة _buildInputField و _buildPasswordInputField و _buildActionButton
-  // تبقى كما هي من الكود السابق، مع تعديلات بسيطة لتتناسب مع GetX
-
-  Widget _buildInputField({
-    required TextEditingController controller,
-    required String labelText,
-    required IconData icon,
-    TextInputType keyboardType = TextInputType.text,
-  }) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            spreadRadius: 1,
-            blurRadius: 5,
-            offset: const Offset(0, 3),
-          ),
         ],
       ),
-      child: TextFormField(
-        controller: controller,
-        keyboardType: keyboardType,
-        style: const TextStyle(color: AppColors.textBlack),
-        decoration: InputDecoration(
-          labelText: labelText,
-          labelStyle: const TextStyle(color: AppColors.textGrey),
-          prefixIcon: Icon(icon, color: AppColors.primaryPurple),
-          border: InputBorder.none,
-          floatingLabelBehavior: FloatingLabelBehavior.always,
-        ),
-      ),
-    );
-  }
 
-  Widget _buildPasswordInputField({
-    required TextEditingController controller,
-    required String labelText,
-    required IconData icon,
-    required VoidCallback onPressedChangePassword,
-  }) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            spreadRadius: 1,
-            blurRadius: 5,
-            offset: const Offset(0, 3),
-          ),
+      // Bottom Navigation Bar
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 2,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.people), label: "Posts"),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
         ],
       ),
-      child: TextFormField(
-        controller: controller,
-        obscureText: true,
-        readOnly: true,
-        style: const TextStyle(color: AppColors.textBlack),
-        decoration: InputDecoration(
-          labelText: labelText,
-          labelStyle: const TextStyle(color: AppColors.textGrey),
-          prefixIcon: Icon(icon, color: AppColors.primaryPurple),
-          border: InputBorder.none,
-          floatingLabelBehavior: FloatingLabelBehavior.always,
-          suffixIcon: TextButton(
-            onPressed: onPressedChangePassword,
-            child: const Text(
-              'تغيير كلمة المرور',
-              style: TextStyle(color: AppColors.lightPurple, fontWeight: FontWeight.bold),
-            ),
-          ),
-        ),
-      ),
     );
   }
 
-  Widget _buildActionButton(
-    BuildContext context, {
-    required IconData icon,
+  Widget _buildTextField({
     required String label,
-    required VoidCallback onPressed,
+    bool obscureText = false,
+    Widget? suffixIcon,
+    Widget? suffix,
   }) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 5.0),
-        child: ElevatedButton(
-          onPressed: onPressed,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.white,
-            foregroundColor: AppColors.primaryPurple,
-            padding: const EdgeInsets.symmetric(vertical: 15),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            elevation: 3,
-            shadowColor: Colors.grey.withOpacity(0.2),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, size: 28),
-              const SizedBox(height: 5),
-              Text(
-                label,
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 14),
-              ),
-            ],
-          ),
+    return TextField(
+      obscureText: obscureText,
+      decoration: InputDecoration(
+        labelText: label,
+        suffixIcon: suffixIcon,
+        suffix: suffix,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
         ),
       ),
     );
