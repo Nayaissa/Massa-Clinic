@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "668001745302",
+    "project_id": "massaclinic-6b211",
+    "storage_bucket": "massaclinic-6b211.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:668001745302:android:66e378d8606aa193cac5b7",
+        "android_client_info": {
+          "package_name": "com.example.massaclinic"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAk4oZdTrZ9okG7NT3MmkgxhP0Z_Gg96Jc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
