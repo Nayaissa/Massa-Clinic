@@ -35,7 +35,7 @@ import 'package:massaclinic/view/widget/onBoarding/DotOnBoarding.dart';
 //       ),
 //     ));
 //   }
-// } وجود
+// } 
 class OnBoarding extends StatelessWidget {
   const OnBoarding({super.key});
 

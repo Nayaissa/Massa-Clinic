@@ -5,6 +5,7 @@ import 'package:massaclinic/core/class/statusrequest.dart';
 import 'package:massaclinic/core/constant/routes.dart';
 import 'package:massaclinic/core/services/services.dart';
 import 'package:massaclinic/data/model/mostpuplarservices_model.dart';
+import 'package:massaclinic/data/model/profile_model.dart';
 
 abstract class HomeController extends GetxController {
   getmostpup();
@@ -20,6 +21,33 @@ class HomeControllerImp extends HomeController {
   List items = [];
   TextEditingController? mysearch;
   bool isSearch = false;
+StatusRequest? statusRequestprofile;
+  ProfileModel? profileModel;
+  
+// show profile
+  profileUser() {
+    statusRequestprofile = StatusRequest.loading;
+    update();
+
+    DioHelper.getDataa(url: '/api/show-profile')
+        .then((value) {
+          print(value!.data);
+          if (value.statusCode == 200) {
+            profileModel = ProfileModel.fromJson(value.data);
+
+            statusRequestprofile = StatusRequest.success;
+          } else {
+            statusRequestprofile = StatusRequest.noData;
+          }
+          update();
+        })
+        .catchError((error) {
+          print(error.toString());
+          statusRequestprofile = StatusRequest.serverfailure;
+          update();
+        });
+  }
+
   checkSearch(val) {
     if (val == '') {
       isSearch = false;
@@ -87,6 +115,7 @@ class HomeControllerImp extends HomeController {
   void onInit() {
     mysearch = TextEditingController();
     getmostpup();
+    profileUser();
     super.onInit();
   }
 

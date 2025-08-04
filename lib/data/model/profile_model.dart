@@ -4,6 +4,7 @@ class ProfileModel {
   String? email;
   String? phonenumber;
   String? profileImageUrl;
+  String ? imageUrl;
   String? createdAt;
 
   ProfileModel({
@@ -12,6 +13,7 @@ class ProfileModel {
     this.email,
     this.phonenumber,
     this.profileImageUrl,
+    this.imageUrl,
     this.createdAt,
   });
 
@@ -20,9 +22,9 @@ class ProfileModel {
     name = json['name'];
     email = json['email'];
     phonenumber = json['phonenumber'];
-
+    
     profileImageUrl = json['profile_image_url'];
-
+       imageUrl =profileImageUrl?.replaceAll('127.0.0.1', '10.0.2.2');
     createdAt = json['created_at'];
   }
 

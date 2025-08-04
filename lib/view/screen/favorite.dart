@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:massaclinic/controller/favorite_services_controller.dart';
+import 'package:massaclinic/controller/services/favorite_services_controller.dart';
 import 'package:massaclinic/core/class/statusrequest.dart';
 import 'package:massaclinic/core/constant/AppColor.dart';
 import 'package:massaclinic/core/constant/AppImagesAssets.dart';

@@ -46,6 +46,7 @@ class LoginControllerImp extends LoginController {
             data: {'email': email.text, 'password': password.text},
           )
           .then((value) {
+            
             print(value!.data);
             if (value.statusCode == 200) {
               loginModel = LoginModel.fromJson(value.data);
@@ -63,12 +64,12 @@ class LoginControllerImp extends LoginController {
               );
               myServices.sharedPreferences.setString(
                 'imageurl',
-                loginModel!.imageUrl!,
+                loginModel?.imageUrl ?? 'https://plus.unsplash.com/premium_photo-1690407617542-2f210cf20d7e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8fDB8fHww',
               );
               myServices.sharedPreferences.setString('step', '2');
               statusRequest = StatusRequest.success;
               token = myServices.sharedPreferences.getString('token');
-              print(token);
+              print('naya =$token');
               Get.snackbar('Congratulations', loginModel!.message!);
               Get.offNamed(AppRoute.homepage);
               update();

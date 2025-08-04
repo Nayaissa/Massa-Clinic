@@ -53,7 +53,7 @@ class Specialists {
   String? address;
   String? imageSpecialist;
   String? image;
-  Null? deletedAt;
+  String? deletedAt;
 
   Specialists({
     this.id,

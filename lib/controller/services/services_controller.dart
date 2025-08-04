@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:massaclinic/controller/details_services_controller.dart';
+import 'package:massaclinic/controller/services/details_services_controller.dart';
 import 'package:massaclinic/core/class/diohelper.dart';
 import 'package:massaclinic/core/class/statusrequest.dart';
 import 'package:massaclinic/core/constant/AppColor.dart';

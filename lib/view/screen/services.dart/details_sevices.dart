@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:massaclinic/controller/details_services_controller.dart';
+import 'package:massaclinic/controller/services/details_services_controller.dart';
+import 'package:massaclinic/controller/myreservation_controller.dart';
 import 'package:massaclinic/core/constant/AppColor.dart';
 
 class DetailsServices extends StatelessWidget {
@@ -8,29 +9,40 @@ class DetailsServices extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(DetailsServicreControllerImp());
+    DetailsServicreControllerImp servicreControllerImp = Get.put(
+      DetailsServicreControllerImp(),
+    );
+   Get.put(BookingsController());
     return Scaffold(
-      bottomNavigationBar: Container(
-        height: 70,
-        color: AppColor.backgroundColor,
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 16, vertical: 15),
-          width: double.infinity,
-          height: 40,
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColor.primaryColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+      bottomNavigationBar: GetBuilder<BookingsController>(
+        builder: (controller) {
+          return Container(
+            height: 70,
+            color: AppColor.backgroundColor,
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 15),
+              width: double.infinity,
+              height: 40,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColor.primaryColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                onPressed: () {
+                  controller.addReservation(
+                    servicreControllerImp.id.toString(),
+                  );
+                },
+                child:  Text(
+                  'Book Appointment',
+                  style: TextStyle(fontSize: 16, color: AppColor.thirdColor),
+                ),
               ),
             ),
-            onPressed: () {},
-            child: const Text(
-              'Book Appointment',
-              style: TextStyle(fontSize: 16, color: AppColor.thirdColor),
-            ),
-          ),
-        ),
+          );
+        },
       ),
       backgroundColor: AppColor.thirdColor,
       body: SingleChildScrollView(
@@ -132,7 +144,9 @@ class DetailsServices extends StatelessWidget {
                                   controller.doctorModel?.data?.doctors?[index];
                               return DoctorCard(
                                 name: doctordet?.name ?? 'naya',
-                                imagePath: doctordet?.image ?? 'https://i.pravatar.cc/150?img=5' ,
+                                imagePath:
+                                    doctordet?.image ??
+                                    'https://i.pravatar.cc/150?img=5',
                               );
                             },
                           ),
@@ -151,15 +165,24 @@ class DetailsServices extends StatelessWidget {
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             shrinkWrap: true,
-                           itemCount:
-                                controller.specialistsModel?.data?.specialists?.length ??
+                            itemCount:
+                                controller
+                                    .specialistsModel
+                                    ?.data
+                                    ?.specialists
+                                    ?.length ??
                                 0,
                             itemBuilder: (context, index) {
                               final specialistde =
-                                  controller.specialistsModel?.data?.specialists?[index];
+                                  controller
+                                      .specialistsModel
+                                      ?.data
+                                      ?.specialists?[index];
                               return DoctorCard(
                                 name: specialistde?.nameSpecialist ?? 'naya',
-                                imagePath: specialistde?.image ?? 'https://i.pravatar.cc/150?img=5' ,
+                                imagePath:
+                                    specialistde?.image ??
+                                    'https://i.pravatar.cc/150?img=5',
                               );
                             },
                           ),

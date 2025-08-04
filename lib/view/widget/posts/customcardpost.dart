@@ -12,6 +12,7 @@ List<String> postImages = [
   'assets/images/botoksface.jpeg',
 ];
 
+// ignore: must_be_immutable
 class CustomCardPost extends GetView<PostsControllerImp> {
    CustomCardPost({super.key, this.dataPost});
   Data? dataPost;
@@ -91,7 +92,7 @@ class CustomCardPost extends GetView<PostsControllerImp> {
                     itemBuilder: (context, imageIndex) {
                       print( dataPost!.images![imageIndex]);
                       return Image.network(
-                        dataPost!.images![imageIndex].replaceAll('127.0.0.1', '10.0.2.2') ?? postImages[imageIndex],
+                        dataPost!.images![imageIndex].replaceAll('127.0.0.1', '10.0.2.2'),
                         fit: BoxFit.cover,
                         width: double.infinity,
                       );

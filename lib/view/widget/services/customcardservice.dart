@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:massaclinic/controller/services_controller.dart';
+import 'package:massaclinic/controller/services/services_controller.dart';
 import 'package:massaclinic/core/constant/AppColor.dart';
 import 'package:massaclinic/data/model/unified_service_model.dart';
 

@@ -9,7 +9,10 @@ class MyMiddleWare extends GetMiddleware{
     MyServices myServices = Get.find();
 @override
   RouteSettings? redirect(String? route){
-    if(myServices.sharedPreferences.getString('onboarding') =='1'){
+     if(myServices.sharedPreferences.getString('step') =='2'){
+         return const RouteSettings(  name:AppRoute.homepage );
+    }
+    if(myServices.sharedPreferences.getString('step') =='1'){
          return const RouteSettings(  name:AppRoute.login );
     }
     return null;

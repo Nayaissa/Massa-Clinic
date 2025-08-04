@@ -1,93 +1,158 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:massaclinic/data/model/Booking_model.dart';
+import 'package:massaclinic/core/class/diohelper.dart';
+import 'package:massaclinic/core/class/statusrequest.dart';
+import 'package:massaclinic/core/constant/AppColor.dart';
+import 'package:massaclinic/data/model/Login_model.dart';
+import 'package:massaclinic/data/model/reservation_model.dart';
+import 'package:massaclinic/data/model/status_model.dart';
 
 class BookingsController extends GetxController {
-  String selectedTab = 'Upcoming';
+  StatusRequest? addBookState;
+  StatusRequest? showStatus;
+  StatusRequest? reservationStatusRequest;
+  StatusesModel? statusesModel;
+  ReservationsModel? reservationsModel;
+  LoginModel? loginModel;
+  @override
+  void onInit() {
+    getStatus();
+    getReservation(selectedTab);
+    super.onInit();
+  }
 
-  List<BookingModel> allBookings = [
-    // 🔸 Upcoming Bookings
-    BookingModel(
-      date: "Jul 20, 2025",
-      time: "11:00 AM",
-      stationName: "Glow Beauty",
-      address: "123 Main St, Beauty City",
-      duration: 1.0,
-      imageUrl: "assets/images/laserface.jpeg",
-      serviceName: "Laser Hair Removal",
-      categoryName: "Body",
-    ),
-    BookingModel(
-      date: "Jul 25, 2025",
-      time: "03:30 PM",
-      stationName: "Elegance Spa",
-      address: "88 Soft Ave, Glam Town",
-      duration: 1.5,
-      imageUrl: "assets/images/fillerface.jpeg",
-      serviceName: "small nose",
-      categoryName: "Face",
-    ),
-
-    // 🔸 Completed Bookings
-    BookingModel(
-      date: "Jun 10, 2025",
-      time: "01:00 PM",
-      stationName: "Spark EV Hub",
-      address: "456 Energy Rd, Volt Town",
-      duration: 2.0,
-      isCompleted: true,
-      imageUrl: "assets/images/botoksface.jpeg",
-      serviceName: "Botox Injection",
-      categoryName: "Face",
-    ),
-    BookingModel(
-      date: "Jun 15, 2025",
-      time: "04:00 PM",
-      stationName: "Luxury Touch",
-      address: "999 Elite Blvd, VIP City",
-      duration: 1.2,
-      isCompleted: true,
-      imageUrl: "assets/images/fillerface.jpeg",
-      serviceName: "Lip Filler",
-      categoryName: "Face",
-    ),
-
-    // 🔸 Canceled Bookings
-    BookingModel(
-      date: "May 28, 2025",
-      time: "11:00 AM",
-      stationName: "GreenCharge Station",
-      address: "789 Ampere Blvd, Eco City",
-      duration: 1.0,
-      isCanceled: true,
-      imageUrl: "assets/images/botoksface.jpeg",
-      serviceName: "Quick Glow",
-      categoryName: "Skin",
-    ),
-    BookingModel(
-      date: "May 30, 2025",
-      time: "12:30 PM",
-      stationName: "Care Studio",
-      address: "100 Fresh St, Soft Town",
-      duration: 1.0,
-      isCanceled: true,
-      imageUrl: "assets/images/laserface.jpeg",
-      serviceName: "Facial Cleanse",
-      categoryName: "Face",
-    ),
-  ];
+  String selectedTab = 'pending';
 
   void changeTab(String tab) {
     selectedTab = tab;
+    getReservation(selectedTab);
     update();
   }
 
-  List<BookingModel> get filteredBookings {
-    if (selectedTab == 'Upcoming') {
-      return allBookings.where((b) => b.isUpcoming).toList();
-    } else if (selectedTab == 'Completed') {
-      return allBookings.where((b) => b.isCompleted).toList();
+  addReservation(String id) {
+    addBookState = StatusRequest.loading;
+    update();
+
+    DioHelper.postsData(url: '/api/reservations', data: {'service_id': id})
+        .then((value) {
+          if (value!.statusCode == 200 || value.statusCode == 201) {
+            addBookState = StatusRequest.success;
+
+            loginModel = LoginModel.fromJson(value.data);
+           Get.defaultDialog(
+        title: "Congratulations",
+        titleStyle: TextStyle(
+          color: AppColor.gery800,
+          fontWeight: FontWeight.bold,
+          fontSize: 16,
+        ),
+        middleText: loginModel!.message!.substring(0, 32),
+        middleTextStyle: TextStyle(
+          color: AppColor.primaryColor,
+          fontSize: 14,
+        ),
+        backgroundColor: AppColor.thirdColor,
+        confirm: TextButton(
+          onPressed: () => Get.back(),
+          child: Text(
+            "OK",
+            style: TextStyle(
+              color: AppColor.gery800,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      );
+
+      update();
     } else {
-      return allBookings.where((b) => b.isCanceled).toList();
-    }
+      loginModel = LoginModel.fromJson(value.data);
+      Get.defaultDialog(
+        title: "Warning",
+        titleStyle: TextStyle(
+          color: AppColor.gery800,
+          fontWeight: FontWeight.bold,
+          fontSize: 16,
+        ),
+        middleText: loginModel!.message!.substring(0, 39),
+        middleTextStyle: TextStyle(
+          color: AppColor.primaryColor,
+          fontSize: 14,
+        ),
+        backgroundColor: AppColor.thirdColor,
+        confirm: TextButton(
+          onPressed: () => Get.back(),
+          child: Text(
+            "OK",
+            style: TextStyle(
+              color: AppColor.gery800,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      );
+            addBookState = StatusRequest.noData;
+          }
+          update();
+        })
+        .catchError((error) {
+          print(error.toString());
+          addBookState = StatusRequest.serverfailure;
+          update();
+        });
+  }
+
+  // get status
+  getStatus() {
+    showStatus = StatusRequest.loading;
+    update();
+
+    DioHelper.getDataa(url: '/api/reservation-statuses')
+        .then((value) {
+          print(value!.data);
+          if (value.statusCode == 200) {
+            showStatus = StatusRequest.success;
+            statusesModel = StatusesModel.fromJson(value.data);
+            update();
+          } else {
+            showStatus = StatusRequest.noData;
+          }
+          update();
+        })
+        .catchError((error) {
+          print(error.toString());
+          addBookState = StatusRequest.serverfailure;
+          update();
+        });
+  }
+
+  // get my reservation
+  getReservation(String state) {
+    reservationStatusRequest = StatusRequest.loading;
+    update();
+
+    DioHelper.getDataa(url: '/api/user/reservations/status/$state')
+        .then((value) {
+          print(value!.data);
+          if (value.statusCode == 200) {
+            reservationStatusRequest = StatusRequest.success;
+            print('nayayyayy');
+            reservationsModel = ReservationsModel.fromJson(value.data);
+            if (reservationsModel!.reservation!.isEmpty ||
+                reservationsModel!.reservation == null) {
+              reservationStatusRequest = StatusRequest.noData;
+            }
+            update();
+          } else {
+            reservationStatusRequest = StatusRequest.noData;
+          }
+          update();
+        })
+        .catchError((error) {
+          print(error.toString());
+          reservationStatusRequest = StatusRequest.serverfailure;
+          update();
+        });
   }
 }

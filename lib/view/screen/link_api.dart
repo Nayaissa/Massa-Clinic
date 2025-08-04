@@ -10,7 +10,7 @@ class AppLink {
 
   // ================Auth===================
 
-  static const String signup = '/api/register-user';
+  static const String signup = 'register-user';
   static const String verfiycodesignup = '$severNamer/auth/verfiycode.php';
   static const String login = '/api/login-user';
 

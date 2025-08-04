@@ -53,7 +53,7 @@ class Doctors {
   String? address;
   String? imageDoctor;
   String? image;
-  Null? deletedAt;
+  String? deletedAt;
   String? createdAt;
   String? updatedAt;
 

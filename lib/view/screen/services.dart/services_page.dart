@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:massaclinic/controller/services_controller.dart';
+import 'package:massaclinic/controller/services/services_controller.dart';
 import 'package:massaclinic/core/class/statusrequest.dart';
 import 'package:massaclinic/core/constant/AppColor.dart';
 import 'package:massaclinic/core/constant/AppImagesAssets.dart';
@@ -16,7 +16,7 @@ class ServicesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(ServicreControllerImp());
-   
+    
 
     return Scaffold(
       body: SafeArea(
@@ -50,44 +50,46 @@ class ServicesPage extends StatelessWidget {
                         ),
                       )
                       : controller.classficationModel?.data != null
-                      ?  !controller.isSearch ?
-                      Container(
-                        height: 48,
-                        margin: const EdgeInsets.symmetric(vertical: 8),
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount:
-                              controller.classficationModel!.data!.length,
-                          padding: const EdgeInsets.symmetric(horizontal: 12),
-                          itemBuilder: (context, index) {
-                            final isSelected =
-                                index == controller.selectedCategoryIndex;
-                            final title =
-                                controller
-                                    .classficationModel!
-                                    .data![index]
-                                    .title ??
-                                '';
+                      ? !controller.isSearch
+                          ? Container(
+                            height: 48,
+                            margin: const EdgeInsets.symmetric(vertical: 8),
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount:
+                                  controller.classficationModel!.data!.length,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                              ),
+                              itemBuilder: (context, index) {
+                                final isSelected =
+                                    index == controller.selectedCategoryIndex;
+                                final title =
+                                    controller
+                                        .classficationModel!
+                                        .data![index]
+                                        .title ??
+                                    '';
 
-                            return ListClassfication(
-                              onTap: () {
-                                controller.selectCategory(index);
+                                return ListClassfication(
+                                  onTap: () {
+                                    controller.selectCategory(index);
+                                  },
+                                  color:
+                                      isSelected
+                                          ? AppColor.thirdColor
+                                          : Colors.white,
+                                  colortext:
+                                      isSelected
+                                          ? AppColor.primaryColor
+                                          : AppColor.grey,
+                                  nameCat: title,
+                                );
                               },
-                              color:
-                                  isSelected
-                                      ? AppColor.thirdColor
-                                      : Colors.white,
-                              colortext:
-                                  isSelected
-                                      ? AppColor.primaryColor
-                                      : AppColor.grey,
-                              nameCat: title,
-                            );
-                          },
-                        ),
-                      ): SizedBox(height: 5,)
-                      :  Text(''),
-                 
+                            ),
+                          )
+                          : SizedBox(height: 5)
+                      : Text(''),
 
                   !controller.isSearch
                       ? Expanded(
@@ -161,27 +163,25 @@ class ListSearch extends GetView<ServicreControllerImp> {
     return Expanded(
       child: GetBuilder<ServicreControllerImp>(
         builder: (controller) {
-         
-          
-          
-            return  controller.SearchStatusRequest == StatusRequest.noData?
-            Lottie.asset(AppImageAssets.noData,width: 250)
-         :  ListView.separated(
-            padding: const EdgeInsets.symmetric(vertical: 4),
-            itemCount: controller.searchModel?.services?.length ?? 0,
-            separatorBuilder: (context, index) => const SizedBox(height: 10),
-            itemBuilder: (context, index) {
-              final item = controller.searchModel?.services?[index];
-              // final progress =
-              //     item.watchedEpisodes / item.totalEpisodes;
+          return controller.SearchStatusRequest == StatusRequest.noData
+              ? Lottie.asset(AppImageAssets.noData, width: 250)
+              : ListView.separated(
+                padding: const EdgeInsets.symmetric(vertical: 4),
+                itemCount: controller.searchModel?.services?.length ?? 0,
+                separatorBuilder:
+                    (context, index) => const SizedBox(height: 10),
+                itemBuilder: (context, index) {
+                  final item = controller.searchModel?.services?[index];
+                  // final progress =
+                  //     item.watchedEpisodes / item.totalEpisodes;
 
-              return CustomSerach(
-                imageUrl: item?.image ?? '' ,
-                title: item?.name??'',
-                subtitle: item?.price ??'',
+                  return CustomSerach(
+                    imageUrl: item?.image ?? '',
+                    title: item?.name ?? '',
+                    subtitle: item?.price ?? '',
+                  );
+                },
               );
-            },
-          );
         },
       ),
     );

@@ -23,8 +23,8 @@ class CustomAppar extends GetView<SignUpControllerImp> {
             left: -140,
             right: -140,
             child: Container(
-              width: 400,
-              height: 400,
+              width: double.infinity,
+              height: 410,
               decoration: BoxDecoration(
                 color:colorcon,
                 shape: BoxShape.circle,
