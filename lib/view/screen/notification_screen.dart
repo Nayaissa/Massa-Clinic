@@ -7,7 +7,7 @@ class NotificationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('الإشعارات'),
+        title: Text('note'),
       ),
       body: Center(
         child: GetBuilder<NotificationController>(

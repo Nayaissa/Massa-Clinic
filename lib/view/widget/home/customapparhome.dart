@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:massaclinic/controller/home/homepage_controller.dart';
-import 'package:massaclinic/controller/profile_controller.dart';
 import 'package:massaclinic/core/constant/AppColor.dart';
 import 'package:massaclinic/core/constant/AppImagesAssets.dart';
 import 'package:massaclinic/view/widget/home/customcontainericon.dart';
@@ -44,7 +43,7 @@ class Customapparhome extends GetView<HomeControllerImp> {
               ),
               SizedBox(width: 5),
               Text(
-                '  Hi \n ' + '${controller.profileModel?.name}' ?? '',
+                '  Hi \n ' '${controller.profileModel?.name}',
                 style: TextStyle(fontSize: 16, color: AppColor.primaryColor),
               ),
               Spacer(),

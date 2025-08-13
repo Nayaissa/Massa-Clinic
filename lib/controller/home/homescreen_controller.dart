@@ -11,7 +11,7 @@ abstract class HomeScreenController extends GetxController {
 class HomeScreenControllerImp extends HomeScreenController {
   int currentpage = 0;
   List<Widget> listpage = [
-    HomePage(),
+   HomePage(),
     // Column(children: [Center(child: Text('Settings'))]),
        SocialPosts(),
 

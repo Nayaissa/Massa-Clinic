@@ -2,7 +2,7 @@ class RegisterModel {
   String? message;
   String? accessToken;
   YourAccount? yourAccount;
-  Null? profileImageUrl;
+  String? profileImageUrl;
 
   RegisterModel(
       {this.message, this.accessToken, this.yourAccount, this.profileImageUrl});

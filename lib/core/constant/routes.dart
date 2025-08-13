@@ -26,9 +26,14 @@ class AppRoute {
 
   // Archive
   static const String archive = '/archive';
+    static const String appointment = '/appointment';
+
+
   //profile
-    static const String profile = '/profile';
-    //profile
-    static const String favorite = '/favorite';
+  static const String profile = '/profile';
+  //favorite
+  static const String favorite = '/favorite';
+  // discounts
+    static const String discount = '/discount';
 
 }

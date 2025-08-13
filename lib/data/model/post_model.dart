@@ -26,7 +26,7 @@ class Data {
   String? description;
   List<String>? images;
   int? commentsCount;
-  List<Comment> comments = []; // ← تهيئة بقائمة فارغة
+  List<Comment> comments = []; 
   int? favoritesCount;
   String? createdAt;
 

@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:massaclinic/controller/services/details_services_controller.dart';
 import 'package:massaclinic/controller/myreservation_controller.dart';
 import 'package:massaclinic/core/constant/AppColor.dart';
+import 'package:massaclinic/view/widget/services/custom_doctor_card.dart';
+import 'package:massaclinic/view/widget/services/custom_text_deatils_service.dart';
 
 class DetailsServices extends StatelessWidget {
   const DetailsServices({super.key});
@@ -12,7 +14,7 @@ class DetailsServices extends StatelessWidget {
     DetailsServicreControllerImp servicreControllerImp = Get.put(
       DetailsServicreControllerImp(),
     );
-   Get.put(BookingsController());
+    Get.put(BookingsController());
     return Scaffold(
       bottomNavigationBar: GetBuilder<BookingsController>(
         builder: (controller) {
@@ -35,7 +37,7 @@ class DetailsServices extends StatelessWidget {
                     servicreControllerImp.id.toString(),
                   );
                 },
-                child:  Text(
+                child: Text(
                   'Book Appointment',
                   style: TextStyle(fontSize: 16, color: AppColor.thirdColor),
                 ),
@@ -82,18 +84,9 @@ class DetailsServices extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Details',
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(height: 8),
-                        Text(
-                          controller.desc!,
-                          style: TextStyle(fontSize: 14, color: Colors.black87),
-                        ),
+                        CustomTextDeatilsService(text: 'Details'),
+
+                        Text(controller.desc!, style: TextStyle(fontSize: 14)),
 
                         const SizedBox(height: 12),
 
@@ -102,33 +95,63 @@ class DetailsServices extends StatelessWidget {
                             Icon(Icons.access_time, color: Colors.pink),
                             SizedBox(width: 8),
                             Text(
-                              'Available from 12:00 to 4:00',
-                              style: TextStyle(fontSize: 14),
+                              'Time:  Available from 12:00 to 4:00',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: AppColor.gery800,
+                              ),
+                            ),
+                          ],
+                        ),
+ const SizedBox(height: 10),
+
+                        Row(
+                          children: [
+                            Text(
+                              'Session Number : ',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: AppColor.gery800,
+                              ),
+                            ),
+                          
+                            Text(
+                              '4',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: AppColor.primaryColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+
+                        Row(
+                          children: [
+                            Text(
+                              'Price :',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: AppColor.gery800,
+                              ),
+                            ),
+                            Spacer(),
+                            Text(
+                              '${controller.price}SY',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.green,
+                              ),
                             ),
                           ],
                         ),
 
-                        const SizedBox(height: 12),
-
-                        Text(
-                          '${controller.price}SY',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.green,
-                          ),
-                        ),
-
                         const SizedBox(height: 20),
-
-                        const Text(
-                          'Doctors',
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
+                        const CustomTextDeatilsService(text: 'Doctors'),
 
                         Container(
                           height: 150,
@@ -142,7 +165,7 @@ class DetailsServices extends StatelessWidget {
                             itemBuilder: (context, index) {
                               final doctordet =
                                   controller.doctorModel?.data?.doctors?[index];
-                              return DoctorCard(
+                              return CustomDoctorCard(
                                 name: doctordet?.name ?? 'naya',
                                 imagePath:
                                     doctordet?.image ??
@@ -151,14 +174,7 @@ class DetailsServices extends StatelessWidget {
                             },
                           ),
                         ),
-                        const Text(
-                          'Specialists',
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
+                        CustomTextDeatilsService(text: 'Specialists'),
 
                         Container(
                           height: 150,
@@ -178,7 +194,7 @@ class DetailsServices extends StatelessWidget {
                                       .specialistsModel
                                       ?.data
                                       ?.specialists?[index];
-                              return DoctorCard(
+                              return CustomDoctorCard(
                                 name: specialistde?.nameSpecialist ?? 'naya',
                                 imagePath:
                                     specialistde?.image ??
@@ -195,57 +211,6 @@ class DetailsServices extends StatelessWidget {
             );
           },
         ),
-      ),
-    );
-  }
-}
-
-class DoctorCard extends StatelessWidget {
-  final String name;
-  final String imagePath;
-
-  const DoctorCard({super.key, required this.name, required this.imagePath});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      // padding: ,
-      width: 120,
-      margin: EdgeInsets.only(right: 10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: AppColor.backgroundColor,
-
-        border: Border.all(color: AppColor.thirdColor, width: 3),
-      ),
-      child: Column(
-        children: [
-          SizedBox(height: 5),
-          CircleAvatar(
-            radius: 37,
-            backgroundColor: AppColor.grey,
-            child: CircleAvatar(
-              radius: 35,
-              backgroundImage: NetworkImage(imagePath),
-            ),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            name,
-            maxLines: 2,
-
-            style: const TextStyle(
-              fontSize: 13,
-              height: 1,
-              fontWeight: FontWeight.bold,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          const Text(
-            'Doctor',
-            style: TextStyle(fontSize: 12, color: Colors.grey),
-          ),
-        ],
       ),
     );
   }

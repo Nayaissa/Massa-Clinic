@@ -79,7 +79,7 @@ StatusRequest? statusRequestprofile;
 
     AppRoute.servicespage,
     AppRoute.reservations,
-    AppRoute.homepage,
+    AppRoute.discount,
     AppRoute.homepage,
   ];
 

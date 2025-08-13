@@ -6,36 +6,6 @@ import 'package:massaclinic/view/widget/onBoarding/CustomButton.dart';
 import 'package:massaclinic/view/widget/onBoarding/CustomSlider.dart';
 import 'package:massaclinic/view/widget/onBoarding/DotOnBoarding.dart';
 
-// class OnBoarding extends StatelessWidget {
-//   const OnBoarding({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     Get.put(OnBoardingControllerImp());
-//     return const SafeArea(
-//         child: Scaffold(
-//       body: Column(
-//         children: [
-//           Expanded(
-//             flex: 3,
-//             child: CustomSliderOnBoarding(),
-//           ),
-
-//           Expanded(
-//             flex: 1,
-//             child: Column(
-//               children: [
-//                 DotOnBoarding(),
-//                   Spacer(),
-//                 CustomButtonOnBoarding(),
-//               ],
-//             ),
-//           )
-//         ],
-//       ),
-//     ));
-//   }
-// } 
 class OnBoarding extends StatelessWidget {
   const OnBoarding({super.key});
 

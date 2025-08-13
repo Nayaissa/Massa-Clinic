@@ -1,7 +1,9 @@
 import 'package:get/get.dart';
 import 'package:massaclinic/core/constant/routes.dart';
 import 'package:massaclinic/core/middleware/mymiddleware.dart';
+import 'package:massaclinic/view/screen/Archive/appionment.dart';
 import 'package:massaclinic/view/screen/Archive/archive.dart';
+import 'package:massaclinic/view/screen/Discounts/discounts_page.dart';
 import 'package:massaclinic/view/screen/Home/home_screen.dart';
 import 'package:massaclinic/view/screen/Reservations/show_reservation.dart';
 import 'package:massaclinic/view/screen/auth/Forgetpassword/foreget_password.dart';
@@ -20,43 +22,42 @@ import 'package:massaclinic/view/screen/services.dart/services_page.dart';
 
 List<GetPage<dynamic>>? getPages = [
   // intro.....
-  GetPage(name: '/', page: () =>OnBoarding(), middlewares: [MyMiddleWare()]),
-// Auth
+  GetPage(name: '/', page: () => OnBoarding(), middlewares: [MyMiddleWare()]),
+  // Auth
   GetPage(name: AppRoute.login, page: () => LoginScreen()),
   GetPage(name: AppRoute.signUp, page: () => SignupScreen()),
   GetPage(name: AppRoute.forgetPassword, page: () => ForegetpassswordScreen()),
   GetPage(name: AppRoute.verfiyCode, page: () => VerfiyCodeScreen()),
+
   // GetPage(name: AppRoute.verfiyCodeSignUp, page: () => VerfiyCodeSignUp()),
-
   GetPage(name: AppRoute.resetPassword, page: () => ResetPasswordScreen()),
-   GetPage(name: AppRoute.successReset, page: () => SuccessResetPassword()),
+  GetPage(name: AppRoute.successReset, page: () => SuccessResetPassword()),
   // GetPage(name: AppRoute.successSignUp, page: () => SuccessSignUp()),
-   GetPage(name: AppRoute.onBoarding, page: () => OnBoarding()),
-  // //Home 
-    GetPage(name: AppRoute.homepage, page: () => HomeScreen()),
-    // Servicres
-        GetPage(name: AppRoute.servicespage, page: () => ServicesPage()),
-        GetPage(name: AppRoute.detailsservicespage, page: () => DetailsServices()),
-//============posts===========================
-        GetPage(name: AppRoute.commentspage, page: () => CommentsPage()),
+  GetPage(name: AppRoute.onBoarding, page: () => OnBoarding()),
+  // //Home
+  GetPage(name: AppRoute.homepage, page: () => HomeScreen()),
+  // Servicres
+  GetPage(name: AppRoute.servicespage, page: () => ServicesPage()),
+  GetPage(name: AppRoute.detailsservicespage, page: () => DetailsServices()),
+  //============posts===========================
+  GetPage(name: AppRoute.commentspage, page: () => CommentsPage()),
 
+  //====================== reservation======================
+  GetPage(name: AppRoute.reservations, page: () => Reservations()),
 
-//====================== reservation======================
+  //====================== Complaints======================
+  GetPage(name: AppRoute.complaints, page: () => ComplaintPage()),
 
-        GetPage(name: AppRoute.reservations, page: () => Reservations()),
+  //====================== Archive======================
+  GetPage(name: AppRoute.archive, page: () => ArchivePage()),
+  GetPage(name: AppRoute.appointment, page: () => AppointmentsPage()),
 
-//====================== Complaints======================
-
-        GetPage(name: AppRoute.complaints, page: () => ComplaintPage()),
-        //====================== Archive======================
-
-        GetPage(name: AppRoute.archive, page: () => ArchivePage()),
-//======================Profile=========================
-        GetPage(name: AppRoute.profile, page: () => ProfilePage()),
-//======================Favorite=========================
-        GetPage(name: AppRoute.favorite, page: () => FavoriteScreen()),
-
-
+  //======================Profile=========================
+  GetPage(name: AppRoute.profile, page: () => ProfilePage()),
+  //======================Favorite=========================
+  GetPage(name: AppRoute.favorite, page: () => FavoriteScreen()),
+  //======================Discounts=========================
+  GetPage(name: AppRoute.discount, page: () => MyCouponsPage()),
 ];
 // Map<String, Widget Function(BuildContext)> routes = {
 //   //onBoarding
