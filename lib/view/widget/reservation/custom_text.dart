@@ -3,15 +3,17 @@ import 'package:massaclinic/core/constant/AppColor.dart';
 
 // ignore: must_be_immutable
 class CustomTextReservationCard extends StatelessWidget {
-   CustomTextReservationCard({
+  CustomTextReservationCard({
     super.key,
     required this.content,
-    required this.iconData,  this.satate,this.color
+    required this.iconData,
+    this.satate,
+    this.color,
   });
   final String content;
   final IconData iconData;
-    bool ?satate = true;
-     Color? color;
+  bool? satate = true;
+  Color? color;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -23,7 +25,7 @@ class CustomTextReservationCard extends StatelessWidget {
           style: TextStyle(
             fontWeight: FontWeight.w600,
             fontSize: 15,
-            color:satate! ? AppColor.gery800 : color,
+            color: satate == true ? AppColor.gery800 : color,
           ),
         ),
       ],

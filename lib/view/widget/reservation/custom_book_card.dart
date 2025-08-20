@@ -6,7 +6,7 @@ import 'package:massaclinic/view/widget/reservation/custom_text.dart';
 
 class CustomBookCard extends StatelessWidget {
   const CustomBookCard({super.key, required this.booking});
-  final Reservation booking;
+  final Data booking;
   @override
   Widget build(BuildContext context) {
     final isUpcoming = booking.status == 'pending';
@@ -19,17 +19,17 @@ class CustomBookCard extends StatelessWidget {
             ? Colors.green
             : Colors.red;
 
-    DateTime? dateTime;
-    try {
-      dateTime = DateTime.parse(booking.createdAt!);
-    } catch (e) {
-      dateTime = null;
-    }
+    // DateTime? dateTime;
+    // try {
+    //   dateTime = DateTime.parse(booking.createdAt!);
+    // } catch (e) {
+    //   dateTime = null;
+    // }
 
-    String formattedDate =
-        dateTime != null
-            ? "${dateTime.year}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')}"
-            : "N/A";
+    // String formattedDate =
+    //     dateTime != null
+    //         ? "${dateTime.year}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')}"
+    //         : "N/A";
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
@@ -54,7 +54,7 @@ class CustomBookCard extends StatelessWidget {
               ),
               SizedBox(width: 6),
               Text(
-                '${'#' + booking.id.toString()}',
+                '#${booking.reservationId}',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: AppColor.gery800,
@@ -71,9 +71,11 @@ class CustomBookCard extends StatelessWidget {
                 size: 20,
                 color: AppColor.primaryColor,
               ),
-              SizedBox(width: 5),
+              
+               if (isCompleted)
+                  // SizedBox(width: 5),
               Text(
-                formattedDate,
+                booking.reservationDate!,
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 14,
@@ -98,14 +100,16 @@ class CustomBookCard extends StatelessWidget {
 
           CustomTextReservationCard(
             iconData: Icons.label_important_outline,
-            content: '${'Type : ' + booking.service!.classification!.title!}',
+            satate: true,
+            content: 'Type : ${booking.classificationName!}',
           ),
 
           SizedBox(height: 5),
 
           CustomTextReservationCard(
             iconData: FontAwesomeIcons.seedling,
-            content: '${'Service Name : ' + booking.service!.name! + ''}',
+             satate: true,
+            content: 'Service Name : ${booking.serviceName!}',
           ),
 
           SizedBox(height: 5),
@@ -113,11 +117,12 @@ class CustomBookCard extends StatelessWidget {
             children: [
               CustomTextReservationCard(
                 iconData: Icons.numbers_outlined,
-                content: 'Session Number : First session',
+                 satate: true,
+                content: 'Session Name :${booking.sessionName}',
               ),
               Spacer(),
               Text(
-                '30\$',
+                '${booking.sessionPrice}',
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 15,

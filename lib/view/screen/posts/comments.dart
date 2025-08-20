@@ -291,64 +291,58 @@ class CommentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 5)],
-      ),
-      padding: const EdgeInsets.all(12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              CircleAvatar(backgroundImage: AssetImage(comment.avatarUrl), radius: 22),
-              SizedBox(width: 10),
-              Expanded(
-                child: Text.rich(
-                  TextSpan(
-                    children: [
-                      TextSpan(
-                        text: "${comment.name} ",
-                        style: TextStyle(fontWeight: FontWeight.w600,color: AppColor.black),
+    return Row(
+      
+      children: [
+          Container(
+            padding: EdgeInsetsDirectional.only(bottom: 55),
+            child: CircleAvatar(backgroundImage: AssetImage(comment.avatarUrl), radius: 25)),
+          SizedBox(width:10),
+        Expanded(
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12),bottomRight: Radius.circular(12),topRight:Radius.circular(12) ),
+              boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 5)],
+            ),
+            padding: const EdgeInsets.all(12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                  // CircleAvatar(backgroundImage: AssetImage(comment.avatarUrl), radius: 22),
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: Text.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                              text: "${comment.name} ",
+                              style: TextStyle(fontWeight: FontWeight.w600,color: AppColor.black),
+                            ),
+                            // TextSpan(
+                            //   text: "\n ${comment.timeAgo}",
+                            //   style: TextStyle(color: Colors.grey[600], fontSize: 13),
+                            // ),
+                          ],
+                        ),
                       ),
-                      TextSpan(
-                        text: "\n added a comment ${comment.timeAgo}",
-                        style: TextStyle(color: Colors.grey[600], fontSize: 13),
-                      ),
-                    ],
-                  ),
+                    ),
+                    Icon(Icons.more_vert, color: Colors.grey[700]),
+                  ],
                 ),
-              ),
-              Icon(Icons.more_vert, color: Colors.grey[700]),
-            ],
+                SizedBox(height: 10),
+                Text.rich(
+                  _buildTextWithMentions(comment.text),
+                  style: TextStyle(fontSize: 12),
+                ),
+                
+              ],
+            ),
           ),
-          SizedBox(height: 10),
-          Text.rich(
-            _buildTextWithMentions(comment.text),
-            style: TextStyle(fontSize: 15),
-          ),
-          // if (comment.label != null) ...[
-          //   SizedBox(height: 10),
-          //   Container(
-          //     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-          //     decoration: BoxDecoration(
-          //       color: Color(0xFFFAE5E5),
-          //       borderRadius: BorderRadius.circular(8),
-          //     ),
-          //     child: Row(
-          //       mainAxisSize: MainAxisSize.min,
-          //       children: [
-          //         Icon(Icons.picture_as_pdf, color: Colors.red, size: 18),
-          //         SizedBox(width: 6),
-          //         Text(comment.label!, style: TextStyle(fontWeight: FontWeight.w500)),
-          //       ],
-          //     ),
-          //   ),
-          // ],
-        ],
-      ),
+        ),
+      ],
     );
   }
 

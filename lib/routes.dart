@@ -12,10 +12,12 @@ import 'package:massaclinic/view/screen/auth/Forgetpassword/verfiy_code.dart';
 import 'package:massaclinic/view/screen/auth/login.dart';
 import 'package:massaclinic/view/screen/auth/sign_up.dart';
 import 'package:massaclinic/view/screen/auth/success_reset_password.dart';
+import 'package:massaclinic/view/screen/complaints/add_complaints.dart';
 import 'package:massaclinic/view/screen/complaints/complaintspage.dart';
 import 'package:massaclinic/view/screen/favorite.dart';
 import 'package:massaclinic/view/screen/on_boarding.dart';
 import 'package:massaclinic/view/screen/posts/comments.dart';
+import 'package:massaclinic/view/screen/profile/edit_profile.dart';
 import 'package:massaclinic/view/screen/profile/profile.dart';
 import 'package:massaclinic/view/screen/services.dart/details_sevices.dart';
 import 'package:massaclinic/view/screen/services.dart/services_page.dart';
@@ -47,6 +49,8 @@ List<GetPage<dynamic>>? getPages = [
 
   //====================== Complaints======================
   GetPage(name: AppRoute.complaints, page: () => ComplaintPage()),
+    GetPage(name: AppRoute.addcomplaints, page: () => AddComplaintPage()),
+
 
   //====================== Archive======================
   GetPage(name: AppRoute.archive, page: () => ArchivePage()),
@@ -54,6 +58,8 @@ List<GetPage<dynamic>>? getPages = [
 
   //======================Profile=========================
   GetPage(name: AppRoute.profile, page: () => ProfilePage()),
+    GetPage(name: AppRoute.editprofile, page: () => EditProfile()),
+
   //======================Favorite=========================
   GetPage(name: AppRoute.favorite, page: () => FavoriteScreen()),
   //======================Discounts=========================

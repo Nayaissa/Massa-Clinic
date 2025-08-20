@@ -3,8 +3,10 @@ class ProfileModel {
   String? name;
   String? email;
   String? phonenumber;
+  int? age;
+  String? location;
   String? profileImageUrl;
-  String ? imageUrl;
+  String? imageUrl;
   String? createdAt;
 
   ProfileModel({
@@ -12,8 +14,9 @@ class ProfileModel {
     this.name,
     this.email,
     this.phonenumber,
+    this.age,
+    this.location,
     this.profileImageUrl,
-    this.imageUrl,
     this.createdAt,
   });
 
@@ -22,20 +25,23 @@ class ProfileModel {
     name = json['name'];
     email = json['email'];
     phonenumber = json['phonenumber'];
-    
+    age = json['age'];
+    location = json['location'];
     profileImageUrl = json['profile_image_url'];
-       imageUrl =profileImageUrl?.replaceAll('127.0.0.1', '10.0.2.2');
+    imageUrl = profileImageUrl!.replaceAll('127.0.0.1', '10.0.2.2');
     createdAt = json['created_at'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = {};
-    data['id'] = id;
-    data['name'] = name;
-    data['email'] = email;
-    data['phonenumber'] = phonenumber;
-    data['profile_image_url'] = profileImageUrl;
-    data['created_at'] = createdAt;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['email'] = this.email;
+    data['phonenumber'] = this.phonenumber;
+    data['age'] = this.age;
+    data['location'] = this.location;
+    data['profile_image_url'] = this.profileImageUrl;
+    data['created_at'] = this.createdAt;
     return data;
   }
 }

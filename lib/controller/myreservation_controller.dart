@@ -139,8 +139,8 @@ class BookingsController extends GetxController {
             reservationStatusRequest = StatusRequest.success;
             print('nayayyayy');
             reservationsModel = ReservationsModel.fromJson(value.data);
-            if (reservationsModel!.reservation!.isEmpty ||
-                reservationsModel!.reservation == null) {
+            if (reservationsModel!.data!.isEmpty ||
+                reservationsModel!.data == null) {
               reservationStatusRequest = StatusRequest.noData;
             }
             update();

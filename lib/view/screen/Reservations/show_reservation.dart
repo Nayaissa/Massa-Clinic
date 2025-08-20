@@ -77,13 +77,13 @@ class Reservations extends StatelessWidget {
                             itemCount:
                                 controller
                                     .reservationsModel!
-                                    .reservation!
+                                    .data!
                                     .length,
                             itemBuilder: (context, index) {
                               final booking =
                                   controller
                                       .reservationsModel!
-                                      .reservation![index];
+                                      .data![index];
                               return CustomBookCard(booking: booking);
                             },
                           ),

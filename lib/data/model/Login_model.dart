@@ -32,8 +32,10 @@ class YourAccount {
   String? name;
   String? email;
   String? phonenumber;
-  Null emailVerifiedAt;
-  Null fcmToken;
+  int? age;
+  String? location;
+  String? emailVerifiedAt;
+  String? fcmToken;
   String? createdAt;
   String? updatedAt;
   String? profileImage;
@@ -44,6 +46,8 @@ class YourAccount {
       this.name,
       this.email,
       this.phonenumber,
+      this.age,
+      this.location,
       this.emailVerifiedAt,
       this.fcmToken,
       this.createdAt,
@@ -56,6 +60,8 @@ class YourAccount {
     name = json['name'];
     email = json['email'];
     phonenumber = json['phonenumber'];
+    age = json['age'];
+    location = json['location'];
     emailVerifiedAt = json['email_verified_at'];
     fcmToken = json['fcm_token'];
     createdAt = json['created_at'];
@@ -75,6 +81,8 @@ class YourAccount {
     data['name'] = this.name;
     data['email'] = this.email;
     data['phonenumber'] = this.phonenumber;
+    data['age'] = this.age;
+    data['location'] = this.location;
     data['email_verified_at'] = this.emailVerifiedAt;
     data['fcm_token'] = this.fcmToken;
     data['created_at'] = this.createdAt;

@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:massaclinic/core/class/diohelper.dart';
 import 'package:massaclinic/core/class/statusrequest.dart';
@@ -8,11 +9,15 @@ abstract class ComlaintController extends GetxController {}
 class ComlaintControllerImp extends ComlaintController {
   StatusRequest? complaintStatusRequest;
   StatusRequest? deleteStatusRequest;
+  StatusRequest? addStatusRequest;
+
+  TextEditingController? descriptionController;
 
   ComplaintModel? complaintModel;
 
   @override
   void onInit() {
+    descriptionController = TextEditingController();
     showComplaints();
     super.onInit();
   }
@@ -68,6 +73,34 @@ class ComlaintControllerImp extends ComlaintController {
         .catchError((error) {
           print(error.toString());
           complaintStatusRequest = StatusRequest.serverfailure;
+          update();
+        });
+  }
+
+  addComplaints() {
+    addStatusRequest = StatusRequest.loading;
+    update();
+
+    DioHelper.postsData(
+          url: '/api/SubmitComplaint',
+          data: {},
+          query: {
+            'content': descriptionController!.text},
+        )
+        .then((value) {
+          print(value!.data);
+          if (value.statusCode == 200) {
+            addStatusRequest = StatusRequest.success;
+             showComplaints();
+            Get.back();
+            update();
+          } else {
+            addStatusRequest = StatusRequest.noData;
+          }
+          update();
+        })
+        .catchError((error) {
+          addStatusRequest = StatusRequest.serverfailure;
           update();
         });
   }

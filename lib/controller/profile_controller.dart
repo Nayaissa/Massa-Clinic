@@ -24,11 +24,11 @@ void logout() async {
   }
 
 // show profile
-  profileUser() {
+  profileUser()  async{
     statusRequestprofile = StatusRequest.loading;
     update();
 
-    DioHelper.getDataa(url: '/api/show-profile')
+   await DioHelper.getDataa(url: '/api/show-profile')
         .then((value) {
           print(value!.data);
           if (value.statusCode == 200) {

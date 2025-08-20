@@ -24,8 +24,7 @@ class SocialPosts extends StatelessWidget {
                 builder: (controller) {
                   return
                   controller.postStatusRequest == StatusRequest.loading ?
-                  Lottie.asset(AppImageAssets.loding,width: 250)
-                  : ListView.builder(
+    Lottie.asset(AppImageAssets.loding,repeat: true,height: 200,width: 150): ListView.builder(
 
                     // shrinkWrap: true,
                     // physics: NeverScrollableScrollPhysics(),
