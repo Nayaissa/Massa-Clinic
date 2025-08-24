@@ -52,7 +52,7 @@ class Services {
     classificationId = json['classification_id'];
     name = json['name'];
     image = json['image'];
-    imageUp = image!.replaceAll('127.0.0.1', '10.0.2.2');
+    imageUp = image!.replaceAll('127.0.0.1', '192.168.11.177');
     price = json['price'];
     description = json['description'];
     createdAt = json['created_at'];

@@ -10,6 +10,8 @@ import 'package:massaclinic/view/widget/auth/CustomButtonAuth.dart';
 import 'package:massaclinic/view/widget/auth/CustomTextFormFiled.dart';
 import 'package:massaclinic/view/widget/auth/CustomTextSignUpOrSignIn.dart';
 import 'package:massaclinic/view/widget/auth/CustomTextTitleAuth.dart';
+import 'package:massaclinic/view/widget/auth/custom_age_auth.dart';
+import 'package:massaclinic/view/widget/auth/custom_location_auth.dart';
 import 'package:massaclinic/view/widget/auth/customappar.dart';
 
 class SignupScreen extends StatelessWidget {
@@ -88,6 +90,18 @@ class SignupScreen extends StatelessWidget {
                               labelText: 'Password',
                               iconData: Icons.lock_outline,
                             ),
+                            CustomAgeFormField(labelText: 'age',hintText:'Enter Your age' ,valid: (val) {
+                               return validInput(val!, 2, 3, 'password');
+                            },),
+                             CustomLocationField(
+                labelText: "Location",
+                hintText: "Select your location",
+                selectedValue: controller. selectedLocation,
+                items:  controller.locations,
+                onChanged: (val) {
+                   controller.setLocation(val);
+                },
+              ),
                         CustomButtonAuth(
                           textButton: 'SignUp',
                           onPressed: () {

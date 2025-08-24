@@ -28,7 +28,12 @@ class ProfileModel {
     age = json['age'];
     location = json['location'];
     profileImageUrl = json['profile_image_url'];
-    imageUrl = profileImageUrl!.replaceAll('127.0.0.1', '10.0.2.2');
+    imageUrl = json['image_url'] ?? profileImageUrl;
+    
+   
+    if (imageUrl != null) {
+      imageUrl = imageUrl!.replaceAll('127.0.0.1', '10.0.2.2');
+    }
     createdAt = json['created_at'];
   }
 

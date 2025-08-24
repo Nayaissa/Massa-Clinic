@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:massaclinic/core/class/diohelper.dart';
 import 'package:massaclinic/core/class/statusrequest.dart';
 import 'package:massaclinic/data/model/add_favorite_model.dart';
+import 'package:massaclinic/data/model/comment_model.dart';
 import 'package:massaclinic/data/model/post_model.dart';
 
 abstract class PostsController extends GetxController {}
@@ -11,13 +12,16 @@ class PostsControllerImp extends PostsController {
   StatusRequest? postStatusRequest;
   StatusRequest? addStatusRequest;
   StatusRequest? addCommentStatusRequest;
-  AddFavoriteModel? addFavoriteModel;
+  StatusRequest? commentStatusRequest;
 
+  AddFavoriteModel? addFavoriteModel;
+  CommentPostModel? commentModel;
 
   PostModel? postModel;
   @override
   void onInit() {
     showPosts();
+    // showComments(id);
     super.onInit();
   }
 
@@ -55,11 +59,11 @@ class PostsControllerImp extends PostsController {
         });
   }
 
-  addToFavorite(String id) {
+  addToFavorite(String id) async {
     addStatusRequest = StatusRequest.loading;
     update();
 
-    DioHelper.postsData(url: '/api/toggleFavoriteAd/$id', data: {})
+    await DioHelper.postsData(url: '/api/toggleFavoriteAd/$id', data: {})
         .then((value) {
           print(value!.data);
           if (value.statusCode == 200) {
@@ -83,7 +87,5 @@ class PostsControllerImp extends PostsController {
           update();
         });
   }
-  addComment(){
 
-  }
 }

@@ -107,7 +107,7 @@ class CustomCardPost extends GetView<PostsControllerImp> {
                     itemBuilder: (context, imageIndex) {
                       final imageUrl = dataPost!.images![imageIndex].replaceAll(
                         '127.0.0.1',
-                        '10.0.2.2',
+                        '192.168.11.177',
                       );
 
                       return CachedNetworkImage(
@@ -167,7 +167,7 @@ class CustomCardPost extends GetView<PostsControllerImp> {
                         onTap: () {
                           final imageUrl = dataPost!
                               .images![controller.currentImageIndex]
-                              .replaceAll('127.0.0.1', '10.0.2.2');
+                              .replaceAll('127.0.0.1', '192.168.11.177');
 
                           showDialog(
                             context: context,
@@ -183,20 +183,29 @@ class CustomCardPost extends GetView<PostsControllerImp> {
                                       maxScale: 4,
                                       child: Center(
                                         child: CachedNetworkImage(
-  imageUrl: imageUrl,
-  cacheManager: customCacheManager,
-  fit: BoxFit.contain,
-  placeholder: (context, url) => Shimmer.fromColors(
-    baseColor: Colors.grey.shade300,
-    highlightColor: Colors.grey.shade100,
-    child: Container(
-      width: double.infinity,
-      height: 300,
-      color: Colors.white,
-    ),
-  ),
-  errorWidget: (context, url, error) => const Icon(Icons.error, color: Colors.red),
-)
+                                          imageUrl: imageUrl,
+                                          cacheManager: customCacheManager,
+                                          fit: BoxFit.contain,
+                                          placeholder:
+                                              (context, url) =>
+                                                  Shimmer.fromColors(
+                                                    baseColor:
+                                                        Colors.grey.shade300,
+                                                    highlightColor:
+                                                        Colors.grey.shade100,
+                                                    child: Container(
+                                                      width: double.infinity,
+                                                      height: 300,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                          errorWidget:
+                                              (context, url, error) =>
+                                                  const Icon(
+                                                    Icons.error,
+                                                    color: Colors.red,
+                                                  ),
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -246,7 +255,9 @@ class CustomCardPost extends GetView<PostsControllerImp> {
               ),
               const Spacer(),
               InkWell(
-                onTap: () => Get.toNamed(AppRoute.commentspage),
+                onTap: () => Get.toNamed(AppRoute.commentspage,arguments: {
+                  'id':dataPost!.id,
+                }),
                 child: const Icon(
                   Icons.chat_bubble_outline,
                   color: Colors.grey,

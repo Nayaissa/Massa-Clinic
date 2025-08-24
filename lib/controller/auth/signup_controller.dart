@@ -1,6 +1,5 @@
 import 'dart:io';
 
-
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -20,11 +19,14 @@ abstract class SignUpController extends GetxController {
 
 class SignUpControllerImp extends SignUpController {
   GlobalKey<FormState> formstate = GlobalKey<FormState>();
+  late int age = 18;
 
   late TextEditingController email;
   late TextEditingController password;
   late TextEditingController userName;
   late TextEditingController phoneNumber;
+  late TextEditingController addressController;
+
   List data = [];
   bool? isshowpassword = true;
   LoginModel? loginModel;
@@ -43,6 +45,26 @@ class SignUpControllerImp extends SignUpController {
     Get.offNamed(AppRoute.login);
   }
 
+  String? selectedLocation;
+
+  List<String> locations = [
+    "jaramana",
+    "Damascus",
+    "Aleppo",
+    "Homs",
+    "Latakia",
+    "Hama",
+    "Tartous",
+    "Daraa",
+    "Deir ez-Zor",
+  ];
+
+  void setLocation(String? value) {
+    selectedLocation = value;
+    addressController.text = value ?? "";
+    update();
+  }
+
   @override
   SignUp() async {
     var formdata = formstate.currentState;
@@ -56,6 +78,8 @@ class SignUpControllerImp extends SignUpController {
           "email": email.text,
           "phonenumber": phoneNumber.text,
           "password": password.text,
+          "age":age.toString(),
+          "location": selectedLocation,
           if (pickedImage != null)
             "image": dio.MultipartFile.fromBytes(
               await File(pickedImage!.path).readAsBytes(),
@@ -64,20 +88,19 @@ class SignUpControllerImp extends SignUpController {
         });
 
         final response = await DioHelper.dioClient!.post(
-  'http://10.0.2.2:8000/api/register-user',
-  data: formData,
-  options: dio.Options(
-    headers: {
-      "Accept": "application/json",
-      "Content-Type": "multipart/form-data",
-    },
-    followRedirects: false,
-    validateStatus: (status) {
-      return status != null && status < 500;
-    },
-  ),
-);
-
+          'http://10.0.2.2:8000/api/register-user',
+          data: formData,
+          options: dio.Options(
+            headers: {
+              "Accept": "application/json",
+              "Content-Type": "multipart/form-data",
+            },
+            followRedirects: false,
+            validateStatus: (status) {
+              return status != null && status < 500;
+            },
+          ),
+        );
 
         print(response.data);
         if (response.statusCode == 200 || response.statusCode == 201) {
@@ -106,6 +129,7 @@ class SignUpControllerImp extends SignUpController {
     password = TextEditingController();
     userName = TextEditingController();
     phoneNumber = TextEditingController();
+    addressController = TextEditingController();
     super.onInit();
   }
 
@@ -124,6 +148,16 @@ class SignUpControllerImp extends SignUpController {
       AppRoute.verfiyCodeSignUp,
       arguments: {"email": email.text},
     );
+  }
+
+  void increaseAge() {
+    age++;
+    update();
+  }
+
+  void decreaseAge() {
+    if (age > 0) age--;
+    update();
   }
 
   @override

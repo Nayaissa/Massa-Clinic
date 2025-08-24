@@ -74,7 +74,7 @@ class Specialists {
     address = json['address'];
     imageSpecialist = json['image Specialist'];
      imageSpecialist = json['image Specialist'];
-  image = imageSpecialist?.replaceAll('127.0.0.1', '10.0.2.2');
+  image = imageSpecialist?.replaceAll('127.0.0.1', '192.168.11.177');
     deletedAt = json['deleted_at'];
   }
 

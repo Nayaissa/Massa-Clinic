@@ -1,93 +1,84 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
+import 'package:massaclinic/controller/archive_controller.dart';
+import 'package:massaclinic/core/class/statusrequest.dart';
 import 'package:massaclinic/core/constant/AppColor.dart';
+import 'package:massaclinic/core/constant/AppImagesAssets.dart';
+import 'package:massaclinic/core/constant/routes.dart';
 import 'package:massaclinic/view/screen/Archive/appionment.dart';
 import 'package:massaclinic/view/widget/reservation/customappar.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-enum SessionStatus { completed, confirmed, notCompleted }
 
-class SessionModel {
-  final String name;
-  final double price;
-  final SessionStatus status;
+enum SessionStatus { completed, confirmed, notCompleted ,pending}
 
-  SessionModel({
-    required this.name,
-    required this.price,
-    required this.status,
-  });
-}
-List<SessionModel> sessions = [
-  SessionModel(name: 'Session 1', price: 100, status: SessionStatus.completed),
-  SessionModel(name: 'Session 2', price: 100, status: SessionStatus.confirmed),
-  SessionModel(name: 'Session 3', price: 100, status: SessionStatus.notCompleted),
-  SessionModel(name: 'Session 4', price: 100, status: SessionStatus.notCompleted),
-  SessionModel(name: 'Session 5', price: 100, status: SessionStatus.notCompleted),
-];
+// class SessionModel {
+//   final String name;
+//   final double price;
+//   final SessionStatus status;
 
+//   SessionModel({required this.name, required this.price, required this.status});
+// }
 
-class BookingModel {
-  final String serviceName;
-  final String serviceImage;
-  final String bookingDate;
-  final double totalPrice;
-  final double paidAmount;
-  final int totalSessions;
-  final int completedSessions;
-  final List<SessionModel> sessions;
+// List<SessionModel> sessions = [
+//   SessionModel(name: 'Session 1', price: 100, status: SessionStatus.completed),
+//   SessionModel(name: 'Session 2', price: 100, status: SessionStatus.confirmed),
+//   SessionModel(
+//     name: 'Session 3',
+//     price: 100,
+//     status: SessionStatus.notCompleted,
+//   ),
+//   SessionModel(
+//     name: 'Session 4',
+//     price: 100,
+//     status: SessionStatus.notCompleted,
+//   ),
+//   SessionModel(
+//     name: 'Session 5',
+//     price: 100,
+//     status: SessionStatus.notCompleted,
+//   ),
+// ];
 
-  BookingModel({
-    required this.serviceName,
-    required this.serviceImage,
-    required this.bookingDate,
-    required this.totalPrice,
-    required this.paidAmount,
-    required this.totalSessions,
-    required this.completedSessions,
-    required this.sessions,
-  });
-}
 
 class ArchivePage extends StatelessWidget {
   const ArchivePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Get.put(ArchiveControllerImp());
     return Scaffold(
       backgroundColor: AppColor.backgroundColor,
-      body: ListView(
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        children: const [
-          CustomApparReservation(
-            title: 'Archive',
-            icon: Icons.arrow_back_ios_new,
-          ),
-          BookingCard(
-            imagePath: 'assets/images/laserface.jpeg',
-            title: 'Laser',
-            date: '2025-08-06',
-            price: '500.00',
-            completedSessions: 3,
-            totalSessions: 5,
-            sessionStatusText: 'Complete Session',
-          ),
-          BookingCard(
-            imagePath: 'assets/images/fillerface.jpeg',
-            title: 'Filler',
-            date: '2025-08-08',
-            price: '300.00',
-            completedSessions: 4,
-            totalSessions: 4,
-            sessionStatusText: 'Complete Session ',
-          ),
-          BookingCard(
-            imagePath: 'assets/images/botoksface.jpeg',
-            title: 'Botox',
-            date: '2025-08-08',
-            price: '300.00',
-            completedSessions: 2,
-            totalSessions: 4,
-            sessionStatusText: 'Complete Session',
+      body: Column(
+        children: [
+          CustomApparReservation(icon: Icons.arrow_back_ios, title: 'Archive'),
+          GetBuilder<ArchiveControllerImp>(
+            builder: (controller) {
+              return 
+                 controller.statusRequest == StatusRequest.loading ?
+                  Center(child:  Lottie.asset(AppImageAssets.loding,repeat: true ,width: 250,height: 200),)
+                   :
+              Expanded(
+                child: ListView.separated(
+                  itemCount: controller.archiveModdel!.data!.length,
+                  separatorBuilder: (context, index) {
+                    return SizedBox(height: 10);
+                  },
+                  itemBuilder: (context, index) {
+                    final itemArchive = controller.archiveModdel!.data![index];
+                    return BookingCard(
+                      archiveId:  itemArchive.serviceId!,
+                      imagePath: itemArchive.serviceImage!,
+                      title: itemArchive.serviceName!,
+                      price: itemArchive.servicePrice!,
+                      completedSessions: itemArchive.completedSessionsCount!,
+                      totalSessions: itemArchive.totalSessions!,
+                      //  sessionStatusText: itemArchive.!
+                    );
+                  },
+                ),
+              );
+            },
           ),
         ],
       ),
@@ -96,23 +87,25 @@ class ArchivePage extends StatelessWidget {
 }
 
 class BookingCard extends StatelessWidget {
+  final int archiveId; 
+
   final String imagePath;
   final String title;
-  final String date;
+  // final String date;
   final String price;
   final int completedSessions;
   final int totalSessions;
-  final String sessionStatusText;
+  // final String sessionStatusText;
 
   const BookingCard({
     super.key,
     required this.imagePath,
     required this.title,
-    required this.date,
+    // required this.date,
     required this.price,
     required this.completedSessions,
-    required this.totalSessions,
-    required this.sessionStatusText,
+    required this.totalSessions, required this.archiveId,
+    // required this.sessionStatusText,
   });
 
   @override
@@ -127,19 +120,22 @@ class BookingCard extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: const [
-          BoxShadow(color: Colors.black12, blurRadius: 8, offset: Offset(0, 4)),
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 8,
+            offset: Offset(0, 4),
+          ),
         ],
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        // textDirection: TextDirection.rtl,
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
-            child: Image.asset(
+            child: Image.network(
               imagePath,
-              width: 80,
-              height: 80,
+              width: 100,
+              height: 100,
               fit: BoxFit.cover,
             ),
           ),
@@ -156,7 +152,7 @@ class BookingCard extends StatelessWidget {
                     fontSize: 16,
                   ),
                 ),
-
+    
                 const SizedBox(height: 4),
                 Text(
                   "Price: ${price}\$",
@@ -169,14 +165,10 @@ class BookingCard extends StatelessWidget {
                 const SizedBox(height: 8),
                 Text('Next Session:', style: const TextStyle(fontSize: 13)),
                 const SizedBox(height: 4),
-                Text('2025/9/10 : 03:00', style: const TextStyle(fontSize: 15)),
-                // LinearProgressIndicator(
-                //   value: percent,
-                //   minHeight: 6,
-                //   backgroundColor: Colors.grey.shade300,
-                //   color: Colors.green,
-                //   borderRadius: BorderRadius.circular(10),
-                // ),
+                Text(
+                  '2025/9/10 : 03:00',
+                  style: const TextStyle(fontSize: 15),
+                ),
               ],
             ),
           ),
@@ -191,15 +183,20 @@ class BookingCard extends StatelessWidget {
                 backgroundColor: const Color.fromARGB(255, 179, 178, 178),
                 center: Text(
                   "$completedSessions/$totalSessions",
-                  style: const TextStyle(fontSize: 14, color: AppColor.gery800),
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: AppColor.gery800,
+                  ),
                 ),
               ),
-
+    
               SizedBox(
                 width: 80,
                 child: ElevatedButton(
                   onPressed: () {
-                    Get.to(AppointmentsPage(sessions: sessions));
+                    Get.to(AppRoute.appointment,arguments: {
+                      'id':archiveId.toString(),
+                    } );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColor.thirdColor,

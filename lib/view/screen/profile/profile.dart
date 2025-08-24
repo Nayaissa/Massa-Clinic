@@ -180,7 +180,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:massaclinic/controller/profile_controller.dart';
+import 'package:massaclinic/core/class/statusrequest.dart';
 import 'package:massaclinic/core/constant/AppColor.dart';
 import 'package:massaclinic/core/constant/AppImagesAssets.dart';
 import 'package:massaclinic/core/constant/routes.dart';
@@ -197,7 +199,11 @@ class ProfilePage extends StatelessWidget {
       backgroundColor: AppColor.backgroundColor,
       body: GetBuilder<ProfileControllerImp>(
         builder: (controller) {
-          return Column(
+          return
+          
+               controller.statusRequestprofile == StatusRequest.loading ?
+              Center(child:  Lottie.asset(AppImageAssets.loding,repeat: true ,width: 250,height: 200),)
+               : Column(
             children: [
               Stack(
                 clipBehavior: Clip.none,

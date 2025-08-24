@@ -33,7 +33,7 @@ void logout() async {
           print(value!.data);
           if (value.statusCode == 200) {
             profileModel = ProfileModel.fromJson(value.data);
-
+  print('--------------------------------mmmm');
             statusRequestprofile = StatusRequest.success;
           } else {
             statusRequestprofile = StatusRequest.noData;

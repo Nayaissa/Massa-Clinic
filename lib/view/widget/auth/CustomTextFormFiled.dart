@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:massaclinic/core/constant/AppColor.dart';
 
 // ignore: must_be_immutable
 class CustomTextFormFiled extends StatelessWidget {
@@ -48,7 +49,14 @@ class CustomTextFormFiled extends StatelessWidget {
           ),
           suffixIcon: Icon(iconData, color: Colors.grey),
           prefixIcon: InkWell(onTap: onTap, child: Icon(iconprefix)),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30),
+            borderSide:
+                const BorderSide(color: AppColor.secondaryColor, width: 1),
+          ),
         ),
       ),
     );

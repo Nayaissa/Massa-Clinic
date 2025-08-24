@@ -1,7 +1,11 @@
-
 import 'package:flutter/material.dart';
-import 'package:massaclinic/core/constant/AppColor.dart';
-
+import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
+import 'package:massaclinic/controller/copoun_controller.dart';
+import 'package:massaclinic/core/class/statusrequest.dart';
+import 'package:massaclinic/core/constant/AppImagesAssets.dart';
+import 'package:massaclinic/data/model/coupon_model.dart';
+import 'package:massaclinic/view/widget/reservation/customappar.dart';
 
 class Coupon {
   final String brand;
@@ -11,8 +15,7 @@ class Coupon {
   final Color color1;
   final Color color2;
   final String imageUrl;
-    final String number;
-
+  final String number;
 
   Coupon({
     required this.brand,
@@ -26,98 +29,63 @@ class Coupon {
   });
 }
 
-class MyCouponsPage extends StatefulWidget {
+class MyCouponsPage extends StatelessWidget {
   const MyCouponsPage({super.key});
 
   @override
-  State<MyCouponsPage> createState() => _MyCouponsPageState();
-}
-
-class _MyCouponsPageState extends State<MyCouponsPage> {
-  final TextEditingController _searchController = TextEditingController();
-
-  final List<Coupon> coupons = [
-    Coupon(
-      brand: 'Laser Face',
-      description: '30% off in your next supply purchase',
-      validUntil: 'Valid until: 3rd Aug 2025',
-      discount: '30%',
-      color1: const Color(0xFF8FC6FF),
-      color2: const Color(0xFF5EA6F5),
-      imageUrl:
-          'assets/images/laserface.jpeg',
-          number: 'for 100 person'
-    ),
-    
-    Coupon(
-      brand: 'Lip Fcae',
-      description: '20% off on any purchase',
-      validUntil: 'Valid until: 3rd Aug 2025',
-      discount: '20%',
-      color1: const Color(0xFF99E1C7),
-      color2: const Color(0xFF66C2A2),
-      imageUrl:
-          'assets/images/fillerface.jpeg',
-           number: 'for 100 person'
-    ),
-    Coupon(
-      brand: 'Botox',
-      description: 'All socks are buy one get one free',
-      validUntil: 'Valid until: 3rd Aug 2025',
-      discount: '40%',
-      color1: const Color(0xFFFFC1D1),
-      color2: const Color(0xFFE48BA0),
-      imageUrl:
-          'assets/images/botoksface.jpeg',
-           number: 'for 100 person'
-    ),
-  ];
-
-  List<Coupon> _filterCoupons() {
-    final query = _searchController.text.toLowerCase();
-    if (query.isEmpty) return coupons;
-    return coupons
-        .where((c) =>
-            c.brand.toLowerCase().contains(query) ||
-            c.description.toLowerCase().contains(query))
-        .toList();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    Get.put(CopounControllerImp());
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          ' coupons',
-          style: TextStyle(color: Colors.black),
+      body: SafeArea(
+        child: GetBuilder<CopounControllerImp>(
+          builder: (controller) {
+            return 
+            
+                
+            Column(
+              children: [
+                CustomApparReservation(
+                  icon: Icons.arrow_back_ios,
+                  title: 'Coupons',
+                ),
+                 controller.statusRequest == StatusRequest.loading ?
+                Center(child:  Center(child: Lottie.asset(AppImageAssets.loding,repeat: true ,width: 250,height: 200)),)
+                 :
+                Expanded(
+                  child: ListView.separated(
+                    padding: const EdgeInsets.all(16),
+                    itemCount: controller.couponModel!.data!.length,
+                    separatorBuilder: (_, __) => const SizedBox(height: 12),
+                    itemBuilder: (context, index) {
+        final item = controller.couponModel!.data!;
+        final colors =controller. gradientColors[index %  controller. gradientColors.length];
+        return CouponCard(
+          coupon: item[index],
+          color1: colors[0],
+          color2: colors[1],
+        );
+            },),
+                ),
+              ],
+            );
+          },
         ),
-        backgroundColor: AppColor.backgroundColor,
-        elevation: 0,
-        centerTitle: false,
-      ),
-      body: Column(
-        children: [
-         
-          Expanded(
-            child: ListView.separated(
-              padding: const EdgeInsets.all(16),
-              itemCount: _filterCoupons().length,
-              separatorBuilder: (_, __) => const SizedBox(height: 12),
-              itemBuilder: (context, index) {
-                return CouponCard(coupon: _filterCoupons()[index]);
-              },
-            ),
-          ),
-        ],
       ),
     );
   }
 }
 
 class CouponCard extends StatelessWidget {
-  final Coupon coupon;
-  const CouponCard({super.key, required this.coupon});
+  final Data coupon;
+  final Color color1;
+  final Color color2;
 
+  const CouponCard({
+    super.key,
+    required this.coupon,
+    required this.color1,
+    required this.color2,
+  });
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -128,14 +96,14 @@ class CouponCard extends StatelessWidget {
           Expanded(
             flex: 2,
             child: Container(
-              height: 110,
+              height: 130,
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(12),
                   bottomLeft: Radius.circular(12),
                 ),
                 image: DecorationImage(
-                  image: AssetImage(coupon.imageUrl),
+                  image: NetworkImage(coupon.image!),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -146,37 +114,72 @@ class CouponCard extends StatelessWidget {
                     bottomLeft: Radius.circular(12),
                   ),
                   gradient: LinearGradient(
-                    colors: [coupon.color1.withOpacity(0.8), coupon.color2],
+                    colors: [color1.withOpacity(0.5), color1.withOpacity(0.8),color2.withOpacity(0.8)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
                 ),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      coupon.brand,
+                      coupon.services![0].name!,
                       style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold),
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: 4),
                     Expanded(
                       child: Text(
-                        coupon.description,
-                        style:
-                            const TextStyle(color: Colors.white, fontSize: 13),
+                        coupon.description!,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                        ),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    Text(
-                      coupon.validUntil,
-                      style:
-                          const TextStyle(color: Colors.white70, fontSize: 11),
+                     Row(
+                      children: [
+                         Text(
+                          'People available:',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
+                        ),
+                        Text(
+                          coupon.numOfParticipant.toString(),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],),SizedBox(height: 2,),
+                    Row(
+                      children: [
+                         Text(
+                          'Valid Until:',
+                          style: const TextStyle(
+                            color: Colors.white70,
+                            fontSize: 13,
+                          ),
+                        ),
+                        Text(
+                          coupon.endDate!,
+                          style: const TextStyle(
+                            color: Colors.white70,
+                            fontSize: 13,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -185,7 +188,7 @@ class CouponCard extends StatelessWidget {
           ),
           Container(
             width: 80,
-            height: 110,
+            height: 130,
             decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
@@ -197,7 +200,7 @@ class CouponCard extends StatelessWidget {
                   color: Color.fromARGB(30, 0, 0, 0),
                   blurRadius: 6,
                   offset: Offset(0, 3),
-                )
+                ),
               ],
             ),
             alignment: Alignment.center,
@@ -205,18 +208,17 @@ class CouponCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  coupon.discount,
+                  '${coupon.percentage!.substring(0,2)} %',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: _isSale(coupon.discount)
-                        ? Colors.pink
-                        : Colors.black87,
+                    color:
+                        _isSale(coupon.percentage!) ? Colors.pink : Colors.black87,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  _isSale(coupon.discount) ? 'Sale' : 'Discount',
+                  _isSale(coupon.percentage!) ? 'Sale' : 'Discount',
                   style: const TextStyle(fontSize: 12, color: Colors.black54),
                 ),
               ],
