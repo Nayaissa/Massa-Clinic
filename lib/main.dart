@@ -5,9 +5,9 @@ import 'package:get/get.dart';
 import 'package:massaclinic/bindings/initalbindings.dart';
 import 'package:massaclinic/core/class/diohelper.dart';
 import 'package:massaclinic/core/localization/localChange.dart';
+import 'package:massaclinic/core/localization/translation.dart';
 import 'package:massaclinic/core/services/services.dart';
 import 'package:massaclinic/routes.dart';
-import 'package:massaclinic/view/screen/text.dart';
 // import 'package:massaclinic/view/screen/notification_screen.dart';
 import 'firebase_options.dart';
 
@@ -38,6 +38,10 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       locale: controller.language,
+      translations: MyTranslation(), 
+      
+  // locale: controller.language ?? Locale('en'),
+  fallbackLocale: Locale('en'),   
       theme: controller.appTheme,
       initialBinding: InitialBinding(),
     //  home: SplashScreen(),

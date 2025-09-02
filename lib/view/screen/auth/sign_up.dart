@@ -41,10 +41,7 @@ class SignupScreen extends StatelessWidget {
                           textAlign: TextAlign.start,
                         ),
                         const SizedBox(height: 20),
-                        // const CustomTextBodyAuth(
-                        //   textBody:
-                        //       'SigIn With Your Email And Password OR Continue With Social Media',
-                        // ),
+                       
                         SizedBox(height: 20),
                         CustomTextFormFiled(
                           valid: (val) {

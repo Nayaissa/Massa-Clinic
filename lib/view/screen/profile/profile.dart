@@ -335,13 +335,45 @@ class ProfilePage extends StatelessWidget {
                   children: [
                     ProfileItem(
                       icon: Icons.location_city_outlined,
-                      label: "Address",
+                      label: controller.profileModel?.location ?? '',
                     ),
                     ProfileItem(
-                      icon: Icons.notifications,
-                      label: "Movie Alerts",
+                      icon: Icons.person,
+                      label: controller.profileModel?.age.toString() ?? '',
                     ),
-                    ProfileItem(icon: Icons.settings, label: "Preference"),
+                   ProfileItem(
+  icon: Icons.settings,
+  label: "Preference",
+  onTap: () {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: Icon(Icons.language,color: AppColor.primaryColor,),
+              title: Text("Change Language",style: TextStyle(color: AppColor.primaryColor),),
+              onTap: () {
+              
+                Navigator.pop(context); 
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.dark_mode,color: AppColor.primaryColor,),
+              title: Text("Dark/Light Mode",style: TextStyle(color: AppColor.primaryColor),),
+              onTap: () {
+                
+                Navigator.pop(context); 
+              },
+            ),
+          ],
+        );
+      },
+    );
+  },
+),
+
                     ProfileItem(
                       icon: Icons.privacy_tip,
                       label: "Privacy Policy",

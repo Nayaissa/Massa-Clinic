@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+import 'package:massaclinic/controller/myreservation_controller.dart';
 import 'package:massaclinic/core/constant/AppColor.dart';
 import 'package:massaclinic/data/model/reservation_model.dart';
 import 'package:massaclinic/view/widget/reservation/custom_text.dart';
 
-class CustomBookCard extends StatelessWidget {
+class CustomBookCard extends GetView<BookingsController> {
   const CustomBookCard({super.key, required this.booking});
   final Data booking;
   @override
@@ -71,11 +73,11 @@ class CustomBookCard extends StatelessWidget {
                 size: 20,
                 color: AppColor.primaryColor,
               ),
-              
-               if (isCompleted)
-                  // SizedBox(width: 5),
+
+              // if (isCompleted)
+              SizedBox(width: 5),
               Text(
-                booking.reservationDate!,
+                booking.reservationDate ?? '',
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 14,
@@ -108,7 +110,7 @@ class CustomBookCard extends StatelessWidget {
 
           CustomTextReservationCard(
             iconData: FontAwesomeIcons.seedling,
-             satate: true,
+            satate: true,
             content: 'Service Name : ${booking.serviceName!}',
           ),
 
@@ -117,7 +119,7 @@ class CustomBookCard extends StatelessWidget {
             children: [
               CustomTextReservationCard(
                 iconData: Icons.numbers_outlined,
-                 satate: true,
+                satate: true,
                 content: 'Session Name :${booking.sessionName}',
               ),
               Spacer(),
@@ -139,6 +141,9 @@ class CustomBookCard extends StatelessWidget {
                 Expanded(
                   child: OutlinedButton(
                     onPressed: () {
+                      controller.cancleReservationPending(
+                        booking.reservationId.toString(),
+                      );
                     },
                     style: OutlinedButton.styleFrom(
                       side: BorderSide(color: AppColor.primaryColor),
@@ -149,10 +154,33 @@ class CustomBookCard extends StatelessWidget {
                     ),
                   ),
                 ),
+                SizedBox(width: 12),
+                booking.buttons!.confirmEnabled == true
+                    ? Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          controller.confirmByUser(
+                            booking.reservationId.toString(),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColor.secondaryColor,
+                          padding: EdgeInsets.symmetric(vertical: 8),
+                        ),
+                        child: Text(
+                          "Confirm",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    )
+                    : SizedBox(),
               ] else if (booking.status == 'confirmed') ...[
                 Expanded(
                   child: OutlinedButton(
                     onPressed: () {
+                      controller.cancleReservationConfirmed(
+                        booking.reservationId.toString(),
+                      );
                     },
                     style: OutlinedButton.styleFrom(
                       side: BorderSide(color: AppColor.primaryColor),
@@ -167,6 +195,9 @@ class CustomBookCard extends StatelessWidget {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
+                      controller.postponReservation(
+                        booking.reservationId.toString(),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColor.secondaryColor,

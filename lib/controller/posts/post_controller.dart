@@ -42,7 +42,7 @@ class PostsControllerImp extends PostsController {
 
             postModel = PostModel.fromJson(value.data);
             print('200 post');
-
+            update();
             if (postModel!.data == null) {
               postStatusRequest = StatusRequest.noData;
             }
@@ -66,12 +66,12 @@ class PostsControllerImp extends PostsController {
     await DioHelper.postsData(url: '/api/toggleFavoriteAd/$id', data: {})
         .then((value) {
           print(value!.data);
-          if (value.statusCode == 200) {
+          if (value.statusCode == 200 || value.statusCode == 201 ){
             addStatusRequest = StatusRequest.success;
 
             addFavoriteModel = AddFavoriteModel.fromJson(value.data);
             showPosts();
-
+            update();
             if (postModel!.data == null) {
               addStatusRequest = StatusRequest.noData;
             }
@@ -87,5 +87,4 @@ class PostsControllerImp extends PostsController {
           update();
         });
   }
-
 }

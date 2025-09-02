@@ -1,3 +1,117 @@
+// import 'package:flutter/cupertino.dart';
+// import 'package:get/get.dart';
+// import 'package:massaclinic/core/class/diohelper.dart';
+// import 'package:massaclinic/core/class/statusrequest.dart';
+// import 'package:massaclinic/data/model/comment_model.dart';
+
+// abstract class CommentController extends GetxController {}
+
+// class CommentControllerImp extends GetxController {
+//   int currentUserId = 1;
+
+//   StatusRequest? addCommentStatusRequest;
+//   StatusRequest? commentStatusRequest;
+//   StatusRequest? editStatusRequest;
+
+//   CommentPostModel? commentModel;
+//   late String itemId;
+//   late TextEditingController content;
+
+//   @override
+//   void onInit() {
+//     super.onInit();
+//     var data = Get.arguments;
+//     itemId = data['id'].toString();
+//     content = TextEditingController();
+//     showComments(itemId.toString());
+//   }
+
+//   @override
+//   void onClose() {
+//     content.dispose();
+
+//     super.onClose();
+//   }
+
+//   showComments(String id) {
+//     commentStatusRequest = StatusRequest.loading;
+//     update();
+
+//     DioHelper.getDataa(url: '/api/ShowComments/$id')
+//         .then((value) {
+//           print(value!.data);
+//           if (value.statusCode == 200) {
+//             commentStatusRequest = StatusRequest.success;
+//             commentModel = CommentPostModel.fromJson(value.data);
+//             update();
+//           } else {
+//             commentStatusRequest = StatusRequest.noData;
+//           }
+//           update();
+//         })
+//         .catchError((error) {
+//           print(error.toString());
+//           commentStatusRequest = StatusRequest.serverfailure;
+//           update();
+//         });
+//   }
+
+//   addComment(String contentText) {
+//     addCommentStatusRequest = StatusRequest.loading;
+//     update();
+//     DioHelper.postsData(
+//           url: '/api/addComment/$itemId',
+//           data: {},
+//           query: {'content': contentText},
+//         )
+//         .then((value) {
+//           print(value!.data);
+//           if (value.statusCode == 201) {
+//             addCommentStatusRequest = StatusRequest.success;
+//             content.clear();
+//             showComments(itemId);
+//             update();
+//             print('200 post');
+//             update();
+//           } else {
+//             addCommentStatusRequest = StatusRequest.noData;
+//           }
+//           update();
+//         })
+//         .catchError((error) {
+//           print(error.toString());
+//           addCommentStatusRequest = StatusRequest.serverfailure;
+//           update();
+//         });
+//     //
+//   }
+
+//   editComment(String id, String contentText) async {
+//     editStatusRequest = StatusRequest.loading;
+//     update();
+
+//     try {
+//       var response = await DioHelper.putData(
+//         url: '/api/updateComment/$id',
+//         data: {},
+//         query: {'content': contentText},
+//       );
+
+//       if (response!.statusCode == 200) {
+//         editStatusRequest = StatusRequest.success;
+
+//         update();
+//       } else {
+//         editStatusRequest = StatusRequest.noData;
+//       }
+//     } catch (error) {
+//       print(error.toString());
+//       editStatusRequest = StatusRequest.serverfailure;
+//     }
+
+//     update();
+//   }
+// }
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:massaclinic/core/class/diohelper.dart';
@@ -11,10 +125,15 @@ class CommentControllerImp extends GetxController {
 
   StatusRequest? addCommentStatusRequest;
   StatusRequest? commentStatusRequest;
+  StatusRequest? editStatusRequest;
+  StatusRequest? deleteStatusRequest;
 
   CommentPostModel? commentModel;
   late String itemId;
   late TextEditingController content;
+
+  /// لتحديد هل نحن نعدل تعليق معين
+  String? editingCommentId;
 
   @override
   void onInit() {
@@ -28,114 +147,95 @@ class CommentControllerImp extends GetxController {
   @override
   void onClose() {
     content.dispose();
-
     super.onClose();
   }
 
-  showComments(String id) async {
+  showComments(String id) {
     commentStatusRequest = StatusRequest.loading;
     update();
 
-    await DioHelper.getDataa(url: '/api/ShowComments/$id')
-        .then((value) {
-          print(value!.data);
-          if (value.statusCode == 200) {
-            commentStatusRequest = StatusRequest.success;
-            commentModel = CommentPostModel.fromJson(value.data);
-
-            update();
-          } else {
-            commentStatusRequest = StatusRequest.noData;
-          }
-          update();
-        })
-        .catchError((error) {
-          print(error.toString());
-          commentStatusRequest = StatusRequest.serverfailure;
-          update();
-        });
+    DioHelper.getDataa(url: '/api/ShowComments/$id').then((value) {
+      if (value != null && value.statusCode == 200) {
+        commentStatusRequest = StatusRequest.success;
+        commentModel = CommentPostModel.fromJson(value.data);
+      } else {
+        commentStatusRequest = StatusRequest.noData;
+      }
+      update();
+    }).catchError((error) {
+      commentStatusRequest = StatusRequest.serverfailure;
+      update();
+    });
   }
-addComment(String contentText) async {
-  addCommentStatusRequest = StatusRequest.loading;
-  update();
 
-  try {
-    var response = await DioHelper.postsData(
+  addOrEditComment(String contentText) {
+    if (editingCommentId != null) {
+      editComment(editingCommentId!, contentText);
+      return;
+    }
+
+    addCommentStatusRequest = StatusRequest.loading;
+    update();
+    DioHelper.postsData(
       url: '/api/addComment/$itemId',
       data: {},
       query: {'content': contentText},
-    );
-
-    if (response!.statusCode == 200) {
-      addCommentStatusRequest = StatusRequest.success;
-      await showComments(itemId); 
-    } else {
-      addCommentStatusRequest = StatusRequest.noData;
-    }
-  } catch (error) {
-    print(error.toString());
-    addCommentStatusRequest = StatusRequest.serverfailure;
+    ).then((value) {
+      if (value != null && value.statusCode == 201) {
+        addCommentStatusRequest = StatusRequest.success;
+        content.clear();
+        showComments(itemId);
+      } else {
+        addCommentStatusRequest = StatusRequest.noData;
+      }
+      update();
+    }).catchError((error) {
+      addCommentStatusRequest = StatusRequest.serverfailure;
+      update();
+    });
   }
 
-  update();
-}
+  editComment(String id, String contentText) async {
+    editStatusRequest = StatusRequest.loading;
+    update();
 
+    try {
+      var response = await DioHelper.putData(
+        url: '/api/updateComment/$id',
+        data: {},
+        query: {'content': contentText},
+      );
 
-  // List<CommentModel> comments = [
-  //   CommentModel(
-  //     id: 1,
-  //     userId: 1,
-  //     username: "Holo D. Wisewolf",
-  //     avatar: "assets/images/doctor1.jpg",
-  //     comment: "This really helped me! ",
-  //     time: "2m ago",
-  //   ),
-  //   CommentModel(
-  //     id: 2,
-  //     userId: 2,
-  //     username: "Aya H.",
-  //     avatar: "assets/images/doctor2.jpeg",
-  //     comment: "I'm glad it worked for you!",
-  //     time: "1m ago",
-  //   ),
-  // ];
+      if (response != null && response.statusCode == 200) {
+        editStatusRequest = StatusRequest.success;
+        editingCommentId = null;
+        content.clear();
+        showComments(itemId);
+      } else {
+        editStatusRequest = StatusRequest.noData;
+      }
+    } catch (error) {
+      editStatusRequest = StatusRequest.serverfailure;
+    }
 
-  // CommentModel? editingComment;
+    update();
+  }
 
-  // void addComment(String text) {
-  //   comments.add(
-  //     CommentModel(
-  //       id: DateTime.now().millisecondsSinceEpoch,
-  //       userId: currentUserId,
-  //       username: "Holo D. Wisewolf",
-  //       avatar: "assets/doctor.png",
-  //       comment: text,
-  //       time: "Just now",
-  //     ),
-  //   );
-  //   update();
-  // }
+  deleteComment(String id) async {
+    deleteStatusRequest = StatusRequest.loading;
+    update();
 
-  // void startEdit(CommentModel comment) {
-  //   editingComment = comment;
-  //   update();
-  // }
-
-  // void updateComment(String newText) {
-  //   if (editingComment != null) {
-  //     editingComment!.comment = newText;
-  //     editingComment = null;
-  //     update();
-  //   }
-  // }
-
-  // void deleteComment(int id) {
-  //   comments.removeWhere((c) => c.id == id && c.userId == currentUserId);
-  //   update();
-  // }
-
-  // void cancelEdit() {
-  //   editingComment = null;
-  //   update();
-  // }
+    try {
+      var response = await DioHelper.deleteData(url: '/api/deleteComment/$id',data: {});
+      if (response != null && response.statusCode == 200) {
+        deleteStatusRequest = StatusRequest.success;
+        showComments(itemId);
+      } else {
+        deleteStatusRequest = StatusRequest.noData;
+      }
+    } catch (e) {
+      deleteStatusRequest = StatusRequest.serverfailure;
+    }
+    update();
+  }
 }

@@ -84,14 +84,14 @@ class ComlaintControllerImp extends ComlaintController {
     DioHelper.postsData(
           url: '/api/SubmitComplaint',
           data: {},
-          query: {
-            'content': descriptionController!.text},
+          query: {'content': descriptionController!.text},
         )
         .then((value) {
           print(value!.data);
-          if (value.statusCode == 200) {
+          if (value.statusCode == 200 || value.statusCode == 201) {
             addStatusRequest = StatusRequest.success;
-             showComplaints();
+            descriptionController!.clear();
+            showComplaints();
             Get.back();
             update();
           } else {

@@ -15,6 +15,7 @@ import 'package:massaclinic/view/screen/auth/success_reset_password.dart';
 import 'package:massaclinic/view/screen/complaints/add_complaints.dart';
 import 'package:massaclinic/view/screen/complaints/complaintspage.dart';
 import 'package:massaclinic/view/screen/favorite.dart';
+import 'package:massaclinic/view/screen/notification_page.dart';
 import 'package:massaclinic/view/screen/on_boarding.dart';
 import 'package:massaclinic/view/screen/posts/comments.dart';
 import 'package:massaclinic/view/screen/profile/edit_profile.dart';
@@ -64,6 +65,10 @@ List<GetPage<dynamic>>? getPages = [
   GetPage(name: AppRoute.favorite, page: () => FavoriteScreen()),
   //======================Discounts=========================
   GetPage(name: AppRoute.discount, page: () => MyCouponsPage()),
+//======================Notification=========================
+  GetPage(name: AppRoute.notification, page: () => NotificationPage()),
+
+
 ];
 // Map<String, Widget Function(BuildContext)> routes = {
 //   //onBoarding

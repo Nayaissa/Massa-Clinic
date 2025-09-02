@@ -32,6 +32,7 @@ ThemeData themeEnglish = ThemeData(
 
 
 ThemeData themeArabic = ThemeData(
+  fontFamily: 'PoetsenOne',
   textTheme: const TextTheme(
     displayLarge: TextStyle(
       fontSize: 25,

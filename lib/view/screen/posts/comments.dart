@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:massaclinic/controller/posts/comments_controller.dart';
 import 'package:massaclinic/core/class/statusrequest.dart';
 import 'package:massaclinic/core/constant/AppColor.dart';
+import 'package:massaclinic/core/constant/AppImagesAssets.dart';
 import 'package:massaclinic/data/model/comment_model.dart';
 import 'package:massaclinic/view/widget/reservation/customappar.dart';
 import 'package:shimmer/shimmer.dart';
@@ -10,8 +11,7 @@ import 'package:shimmer/shimmer.dart';
 class CommentsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(CommentControllerImp());
-    controller.showComments("1");
+   Get.put(CommentControllerImp());
 
     return SafeArea(
       child: Scaffold(
@@ -119,7 +119,9 @@ class CommentsPage extends StatelessWidget {
                         ),
                         child: ElevatedButton(
                           onPressed: () {
-                            controller.addComment(controller.content.text);
+                            controller.addOrEditComment(
+                              controller.content.text,
+                            );
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColor.thirdColor,
@@ -132,11 +134,11 @@ class CommentsPage extends StatelessWidget {
                             ),
                           ),
                           child: Text(
-                            "Publish",
-                            style: TextStyle(
-                              color: AppColor.primaryColor,
-                              fontWeight: FontWeight.w600,
-                            ),
+                          controller.editingCommentId == null ? "Publish" : "Update",
+                          style: TextStyle(
+                            color: AppColor.primaryColor,
+                            fontWeight: FontWeight.w600,
+                          ),
                           ),
                         ),
                       ),
@@ -179,7 +181,7 @@ class CommentCard extends GetView<CommentControllerImp> {
             Transform.translate(
               offset: Offset(0, -8),
               child: CircleAvatar(
-                backgroundImage: NetworkImage(comment.image!),
+                backgroundImage: comment.image == null ? NetworkImage(comment.image! ) : AssetImage(AppImageAssets.person),
                 radius: 25,
               ),
             ),
@@ -195,9 +197,9 @@ class CommentCard extends GetView<CommentControllerImp> {
                   ),
                   boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 5)],
                 ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 8,
+                padding: const EdgeInsets.only(
+                 bottom: 8,left: 12,right: 12
+                
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -213,10 +215,32 @@ class CommentCard extends GetView<CommentControllerImp> {
                             ),
                           ),
                         ),
-                        Icon(Icons.more_vert, color: Colors.grey[700]),
+                      PopupMenuButton<String>(
+                          icon: Icon(Icons.more_vert, color: Colors.grey[700]),
+                          onSelected: (value) {
+                            if (value == "edit") {
+                              controller.content.text = comment.content ?? "";
+                              controller.editingCommentId = comment.id.toString();
+                              controller.update();
+                            } else if (value == "delete") {
+                               controller.deleteComment(comment.id.toString());
+                            }
+                          },
+                          itemBuilder: (context) => [
+                            PopupMenuItem(
+                              value: "edit",
+                              child: Text("Edit"),
+                            ),
+                            PopupMenuItem(
+                              value: "delete",
+                              child: Text("Delete"),
+                            ),
+                          ],
+                        ),
+                    
                       ],
                     ),
-                    SizedBox(height: 10),
+                 
                     Text.rich(
                       _buildTextWithMentions(comment.content ?? ""),
                       style: TextStyle(fontSize: 12),

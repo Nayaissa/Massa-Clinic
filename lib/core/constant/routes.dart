@@ -37,4 +37,7 @@ class AppRoute {
   static const String favorite = '/favorite';
   // discounts
   static const String discount = '/discount';
+ // notification
+  static const String notification = '/notification';
+
 }

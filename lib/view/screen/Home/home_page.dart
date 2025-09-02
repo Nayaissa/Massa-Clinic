@@ -20,13 +20,13 @@ class HomePage extends StatelessWidget {
           child: ListView(
             children: [
               Customapparhome(
-                title: 'search here',
-                prefixIcon: Icons.search_outlined,
-                onPressed: () {},
-                onPressedsearch: () {},
-                onPressedFav: () {
-                  controller.goToFav();
-                },
+               title: 'search here',
+  prefixIcon: Icons.search_outlined,
+  onPressed: () {},
+  onPressedsearch: () {},
+  onPressedFav: () {
+    controller.goToFav();
+  },
               ),
               CustomCard(title: 'summer ckeck', subtitle: 'Check discount'),
 

@@ -66,62 +66,63 @@ class SignUpControllerImp extends SignUpController {
   }
 
   @override
-  SignUp() async {
-    var formdata = formstate.currentState;
-    if (formdata!.validate()) {
-      statusRequest = StatusRequest.loading;
-      update();
+  @override
+SignUp() async {
+  var formdata = formstate.currentState;
+  if (formdata!.validate()) {
+    statusRequest = StatusRequest.loading;
+    update();
 
-      try {
-        dio.FormData formData = dio.FormData.fromMap({
-          "name": userName.text,
-          "email": email.text,
-          "phonenumber": phoneNumber.text,
-          "password": password.text,
-          "age":age.toString(),
-          "location": selectedLocation,
-          if (pickedImage != null)
-            "image": dio.MultipartFile.fromBytes(
-              await File(pickedImage!.path).readAsBytes(),
-              filename: pickedImage!.path.split('/').last,
-            ),
-        });
-
-        final response = await DioHelper.dioClient!.post(
-          'http://10.0.2.2:8000/api/register-user',
-          data: formData,
-          options: dio.Options(
-            headers: {
-              "Accept": "application/json",
-              "Content-Type": "multipart/form-data",
-            },
-            followRedirects: false,
-            validateStatus: (status) {
-              return status != null && status < 500;
-            },
+    try {
+      // بناء الفورم داتا
+      dio.FormData formData = dio.FormData.fromMap({
+        "name": userName.text.trim(),
+        "email": email.text.trim(),
+        "phonenumber": phoneNumber.text.trim(),
+        "password": password.text.trim(),
+        "age": age.toString(),
+        "location": selectedLocation ?? "",
+        if (pickedImage != null)
+          "image": await dio.MultipartFile.fromFile(
+            pickedImage!.path,
+            filename: pickedImage!.path.split('/').last,
           ),
-        );
+      });
 
-        print(response.data);
-        if (response.statusCode == 200 || response.statusCode == 201) {
-          loginModel = LoginModel.fromJson(response.data);
-          statusRequest = StatusRequest.success;
-          Get.snackbar('Congratulations', loginModel!.message!);
-          Get.offNamed(AppRoute.successReset);
-        } else {
-          print(response.statusCode);
-          registerModel = RegisterModel.fromJson(response.data);
-          statusRequest = StatusRequest.failure;
-          Get.snackbar('Warning', registerModel!.message!);
-        }
-      } catch (e) {
-        print("Error during signup: $e");
-        statusRequest = StatusRequest.serverfailure;
+      final response = await DioHelper.dioClient!.post(
+        'http://10.0.2.2:8000/api/register-user',
+        data: formData,
+        options: dio.Options(
+          headers: {
+            "Accept": "application/json",
+            // لا تحدد Content-Type، Dio يضيفه تلقائياً مع boundary
+          },
+          validateStatus: (status) => true, // عشان ما يرمي استثناء
+        ),
+      );
+
+      print("🔵 Status: ${response.statusCode}");
+      print("🔵 Data: ${response.data}");
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        loginModel = LoginModel.fromJson(response.data);
+        statusRequest = StatusRequest.success;
+        Get.snackbar('Congratulations', loginModel!.message!);
+        Get.offNamed(AppRoute.successReset);
+      } else {
+        registerModel = RegisterModel.fromJson(response.data);
+        statusRequest = StatusRequest.failure;
+        Get.snackbar('Warning', registerModel!.message ?? "Unknown error");
       }
-
-      update();
+    } catch (e) {
+      print("❌ Error during signup: $e");
+      statusRequest = StatusRequest.serverfailure;
     }
+
+    update();
   }
+}
+
 
   @override
   void onInit() {

@@ -32,7 +32,7 @@ class YourAccount {
   String? name;
   String? email;
   String? phonenumber;
-  Null? profileImage;
+  String? profileImage;
   String? updatedAt;
   String? createdAt;
   int? id;
