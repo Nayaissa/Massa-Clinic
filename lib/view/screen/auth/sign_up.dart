@@ -29,15 +29,20 @@ class SignupScreen extends StatelessWidget {
               key: controller.formstate,
               child: ListView(
                 children: [
-                  CustomAppar(image: AppImageAssets.person, radius: 15,colorcon:AppColor.secondaryColor),
+                  CustomAppar
+                  (image: AppImageAssets.person, radius: 15,
+                  colorcon:AppColor.secondaryColor,
+                 coloriconcam: Colors.white,
+
+                  ),
             controller.statusRequest== StatusRequest.loading ?LottieBuilder.asset(AppImageAssets.loding,repeat: true,height: 200,)   :
                Container(
                     padding: EdgeInsets.symmetric(horizontal: 12),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        const CustomTextTitleAuth(
-                          text: 'Create Account',
+                        CustomTextTitleAuth(
+                          text: '10'.tr,
                           textAlign: TextAlign.start,
                         ),
                         const SizedBox(height: 20),
@@ -48,8 +53,8 @@ class SignupScreen extends StatelessWidget {
                             return validInput(val!, 5, 100, 'username');
                           },
                             myController: controller.userName,
-                          hintText: 'Enter Your Name',
-                          labelText: 'UserName',
+                          hintText: '18'.tr,
+                          labelText: '17'.tr,
                           iconData: Icons.person_outline,
                         ),
                         CustomTextFormFiled(
@@ -57,8 +62,8 @@ class SignupScreen extends StatelessWidget {
                             return validInput(val!, 5, 100, 'email');
                           },
                            myController: controller.email,
-                          hintText: 'Enter Your Email',
-                          labelText: 'Email',
+                          hintText: '3'.tr,
+                          labelText: '4'.tr,
                           iconData: Icons.email_outlined,
                         ),
                         CustomTextFormFiled(
@@ -66,8 +71,8 @@ class SignupScreen extends StatelessWidget {
                             return validInput(val!, 10, 15, 'phoneNumber');
                           },
                             myController: controller.phoneNumber,
-                          hintText: 'Enter Your Number',
-                          labelText: 'PhoneNumber',
+                          hintText: '16'.tr,
+                          labelText: '15'.tr,
                           iconData: Icons.phone_android_outlined,
                         ),
                         CustomTextFormFiled(
@@ -83,16 +88,16 @@ class SignupScreen extends StatelessWidget {
                                 return validInput(val!, 5, 30, 'password');
                               },
                               myController: controller.password,
-                              hintText: 'Enter Your Password',
-                              labelText: 'Password',
+                              hintText: '5'.tr,
+                              labelText: '5'.tr,
                               iconData: Icons.lock_outline,
                             ),
-                            CustomAgeFormField(labelText: 'age',hintText:'Enter Your age' ,valid: (val) {
+                            CustomAgeFormField(labelText: '14'.tr,hintText:'14'.tr ,valid: (val) {
                                return validInput(val!, 2, 3, 'password');
                             },),
                              CustomLocationField(
-                labelText: "Location",
-                hintText: "Select your location",
+                labelText: "11".tr,
+                hintText: "11".tr,
                 selectedValue: controller. selectedLocation,
                 items:  controller.locations,
                 onChanged: (val) {
@@ -100,14 +105,14 @@ class SignupScreen extends StatelessWidget {
                 },
               ),
                         CustomButtonAuth(
-                          textButton: 'SignUp',
+                          textButton: '9'.tr,
                           onPressed: () {
                               controller.SignUp();
                           },
                         ),
                         CustomTextSignUpOrSignIn(
-                          textOne: 'Have Any Account?',
-                          textTwo: ' Sign in',
+                          textOne: '12'.tr,
+                          textTwo: '13'.tr,
                           onTap: () {
                             controller.goToLogin();
                           },

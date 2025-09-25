@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:massaclinic/controller/services/services_controller.dart';
 import 'package:massaclinic/core/constant/AppColor.dart';
+import 'package:massaclinic/core/constant/AppImagesAssets.dart';
 import 'package:massaclinic/data/model/unified_service_model.dart';
 
 // ignore: must_be_immutable
@@ -27,9 +28,10 @@ class CustomCardService extends GetView<ServicreControllerImp> {
         children: [
           ClipRRect(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-            child: Image.network(
-              services?.image == null ? 'https://i.pravatar.cc/150?img=12' : services!.image ,
-              height: 118,
+            child: Image.asset(
+              AppImageAssets.logoImage,
+             // services?.image == null ? 'https://i.pravatar.cc/150?img=12' : services!.image ,
+              height: 100,
               fit: BoxFit.cover,
             ),
           ),
@@ -91,6 +93,7 @@ class CustomCardService extends GetView<ServicreControllerImp> {
                   services!.description,
                   services!.price.toString(),
                   services!.id.toString(),
+                  services!.total,
                 );
               },
               style: ElevatedButton.styleFrom(

@@ -26,7 +26,7 @@ class EditProfile extends StatelessWidget {
           children: [
             ListTile(
               leading: Icon(Icons.camera_alt),
-              title: Text('Camera'),
+              title: Text('134'.tr),
               onTap: () {
                 controller.pickImage(ImageSource.camera);
                 Get.back();
@@ -34,7 +34,7 @@ class EditProfile extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(Icons.photo_library),
-              title: Text('Gallery'),
+              title: Text('134'.tr),
               onTap: () {
                 controller.pickImage(ImageSource.gallery);
                 Get.back();
@@ -68,15 +68,18 @@ class EditProfile extends StatelessWidget {
                           Row(
                             children: [
                               IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                   Get.back();
+
+                                },
                                 icon: const Icon(
                                   Icons.arrow_back_ios_new,
                                   color: Colors.white,
                                 ),
                               ),
                               const Spacer(),
-                              const Text(
-                                "Edit Profile",
+                              Text(
+                                "36".tr,
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,
@@ -131,27 +134,27 @@ class EditProfile extends StatelessWidget {
              SizedBox(height: 30,),
                       CustomTextFormEditProfile(
                         controller: controller.nameController,
-                        text: 'Name',
+                        text: '17'.tr,
                         icon: Icons.person,
                       ),
 
                       const SizedBox(height: 12),
                       CustomTextFormEditProfile(
                         controller: controller.emailController,
-                        text: 'Email',
+                        text: '4'.tr,
                         icon: Icons.email,
                       ),
                       const SizedBox(height: 12),
                       CustomTextFormEditProfile(
                         controller: controller.numberController,
-                        text: 'Number',
+                        text: '15'.tr,
                         icon: Icons.call,
                       ),
                       const SizedBox(height: 12),
-                      const CustomAgeField(label: "Age"),
+                      CustomAgeField(label: "14".tr),
                       const SizedBox(height: 12),
                       CustomLocationField(
-                        label: "Location",
+                        label: "11".tr,
                         selectedValue: controller.selectedLocation,
                         items: controller.locations,
                         onChanged: (value) {
@@ -180,8 +183,8 @@ class EditProfile extends StatelessWidget {
     controller.selectedLocation ?? "",
   );
 },
-                          child: const Text(
-                            "Save Changes",
+                          child: Text(
+                            "133".tr,
                             style: TextStyle(
                               fontSize: 16,
                               color: AppColor.thirdColor,

@@ -23,30 +23,34 @@ class MostPuplarServicesModel {
 }
 
 class PopularServices {
-  int? id;
-  String? name;
-  String? price;
-  String? description;
-  String? imageUrl;
+  int? serviceId;
+  String? serviceName;
+  String? serviceImage;
+  int? reservations;
+  int? percentage;
 
   PopularServices(
-      {this.id, this.name, this.price, this.description, this.imageUrl});
+      {this.serviceId,
+      this.serviceName,
+      this.serviceImage,
+      this.reservations,
+      this.percentage});
 
   PopularServices.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    price = json['price'];
-    description = json['description'];
-    imageUrl = json['image_url'];
+    serviceId = json['service_id'];
+    serviceName = json['service_name'];
+    serviceImage = json['service_image'];
+    reservations = json['reservations'];
+    percentage = json['percentage'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['price'] = this.price;
-    data['description'] = this.description;
-    data['image_url'] = this.imageUrl;
+    data['service_id'] = this.serviceId;
+    data['service_name'] = this.serviceName;
+    data['service_image'] = this.serviceImage;
+    data['reservations'] = this.reservations;
+    data['percentage'] = this.percentage;
     return data;
   }
 }

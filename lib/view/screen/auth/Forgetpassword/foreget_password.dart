@@ -41,7 +41,7 @@ class ForegetpassswordScreen extends StatelessWidget {
 
                       SizedBox(height: 10),
                       CustomTextTitleAuth(
-                        text: 'Forget Password ',
+                        text: '20'.tr,
                         textAlign: TextAlign.center,
                       ),
                       SizedBox(height: 10),
@@ -53,8 +53,7 @@ class ForegetpassswordScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 20),
                       CustomTextBodyAuth(
-                        textBody:
-                            'Plaese Enter your Emai Until We Can Send Code',
+                        textBody: '21'.tr,
                       ),
                       SizedBox(height: 10),
 
@@ -63,14 +62,14 @@ class ForegetpassswordScreen extends StatelessWidget {
                           return validInput(val!, 5, 100, 'email');
                         },
                          myController: controller.email,
-                        hintText: 'Enter Your Email',
-                        labelText: 'Email',
+                        hintText: '3'.tr,
+                        labelText: '4'.tr,
                         iconData: Icons.email_outlined,
                       ),
                       Spacer(flex: 3),
 
                       CustomButtonAuth(
-                        textButton: 'Send',
+                        textButton: '22'.tr,
                         onPressed: () {
                           controller.goToVerfiactionCode();
                         },

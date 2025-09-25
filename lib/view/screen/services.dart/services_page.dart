@@ -5,7 +5,7 @@ import 'package:massaclinic/controller/services/services_controller.dart';
 import 'package:massaclinic/core/class/statusrequest.dart';
 import 'package:massaclinic/core/constant/AppColor.dart';
 import 'package:massaclinic/core/constant/AppImagesAssets.dart';
-import 'package:massaclinic/view/widget/Favorite&search/customsearch.dart';
+import 'package:massaclinic/view/widget/Favorite&search/custom_search.dart';
 import 'package:massaclinic/view/widget/services/customapparservices.dart';
 import 'package:massaclinic/view/widget/services/customcardservice.dart';
 import 'package:massaclinic/view/widget/services/listclassfication.dart';
@@ -35,7 +35,7 @@ class ServicesPage extends StatelessWidget {
                     onPressedsearch: () {
                       //controller.onSearchItems();
                     },
-                    title: 'search here',
+                    title: '87'.tr,
                     prefixIcon: Icons.search_outlined,
                     onPressed: () {},
                   ),
@@ -121,7 +121,7 @@ class ServicesPage extends StatelessWidget {
                                         crossAxisCount: 2,
                                         mainAxisSpacing: 16,
                                         crossAxisSpacing: 16,
-                                        childAspectRatio: 0.68,
+                                        childAspectRatio: 0.65,
                                       ),
                                   itemBuilder: (context, index) {
                                     return GetBuilder<ServicreControllerImp>(
@@ -155,6 +155,39 @@ class ServicesPage extends StatelessWidget {
   }
 }
 
+// class ListSearch extends GetView<ServicreControllerImp> {
+//   const ListSearch({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Expanded(
+//       child: GetBuilder<ServicreControllerImp>(
+//         builder: (controller) {
+//           return controller.SearchStatusRequest == StatusRequest.noData
+//               ? Lottie.asset(AppImageAssets.noData, width: 250)
+//               : ListView.separated(
+//                 padding: const EdgeInsets.symmetric(vertical: 4),
+//                 itemCount: controller.searchModel?.services?.length ?? 0,
+//                 separatorBuilder:
+//                     (context, index) => const SizedBox(height: 10),
+//                 itemBuilder: (context, index) {
+//                   final item = controller.searchModel?.services?[index];
+//                   // final progress =
+//                   //     item.watchedEpisodes / item.totalEpisodes;
+
+//                   return CustomSerach(
+//                     imageUrl: item?.image ?? '',
+//                     title: item?.name ?? '',
+//                     subtitle: item?.price ?? '',
+//                   );
+//                 },
+//               );
+//         },
+//       ),
+//     );
+//   }
+// }
+
 class ListSearch extends GetView<ServicreControllerImp> {
   const ListSearch({super.key});
 
@@ -165,20 +198,28 @@ class ListSearch extends GetView<ServicreControllerImp> {
         builder: (controller) {
           return controller.SearchStatusRequest == StatusRequest.noData
               ? Lottie.asset(AppImageAssets.noData, width: 250)
-              : ListView.separated(
-                padding: const EdgeInsets.symmetric(vertical: 4),
-                itemCount: controller.searchModel?.services?.length ?? 0,
-                separatorBuilder:
-                    (context, index) => const SizedBox(height: 10),
-                itemBuilder: (context, index) {
+              : GridView.builder(
+                                  padding: const EdgeInsets.all(14),
+                         itemCount: controller.searchModel?.services?.length ?? 0,
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        mainAxisSpacing: 16,
+                                        crossAxisSpacing: 16,
+                                        childAspectRatio: 0.68,
+                                      ),
+                                  itemBuilder: (context, index) {
                   final item = controller.searchModel?.services?[index];
                   // final progress =
                   //     item.watchedEpisodes / item.totalEpisodes;
 
-                  return CustomSerach(
+                  return CustomSearch(
                     imageUrl: item?.image ?? '',
-                    title: item?.name ?? '',
-                    subtitle: item?.price ?? '',
+                    name: item?.name ?? '',
+                    price: item?.price ?? '',
+                    description:item?.description??'',
+                    id: item?.id,
+                  
                   );
                 },
               );

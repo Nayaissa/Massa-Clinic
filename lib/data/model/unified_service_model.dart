@@ -7,6 +7,8 @@ class UnifiedServiceModel {
   final double price;
   final String description;
    int is_Favorite;
+     int total;
+
 
   UnifiedServiceModel({
     required this.id,
@@ -15,5 +17,6 @@ class UnifiedServiceModel {
     required this.price,
     required this.description,
     required this.is_Favorite,
+    required this.total,
   });
 }

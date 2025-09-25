@@ -30,20 +30,23 @@ class Data {
   String? description;
   String? createdAt;
   String? updatedAt;
+  int? total_sessions;
   int? is_favorite;
   Classification? classification;
 
-  Data(
-      {this.id,
-      this.classificationId,
-      this.name,
-      this.image,
-      this.price,
-      this.description,
-      this.createdAt,
-      this.updatedAt,
-      this.is_favorite,
-      this.classification});
+  Data({
+    this.id,
+    this.classificationId,
+    this.name,
+    this.image,
+    this.price,
+    this.description,
+    this.createdAt,
+    this.updatedAt,
+    this.total_sessions,
+    this.is_favorite,
+    this.classification,
+  });
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -54,10 +57,12 @@ class Data {
     description = json['description'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+    total_sessions = json['total_sessions'];
     is_favorite = json['is_favorite'];
-    classification = json['classification'] != null
-        ? new Classification.fromJson(json['classification'])
-        : null;
+    classification =
+        json['classification'] != null
+            ? new Classification.fromJson(json['classification'])
+            : null;
   }
 
   Map<String, dynamic> toJson() {

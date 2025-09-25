@@ -215,12 +215,12 @@ class ProfilePage extends StatelessWidget {
                       width: double.infinity,
                       height: 230,
                       color: AppColor.primaryColor,
-                      child: const SafeArea(
+                      child: SafeArea(
                         child: Center(
                           child: Padding(
                             padding: EdgeInsets.only( bottom: 20),
                             child: Text(
-                              'Profile',
+                              '35'.tr,
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 22,
@@ -353,7 +353,7 @@ class ProfilePage extends StatelessWidget {
           children: [
             ListTile(
               leading: Icon(Icons.language,color: AppColor.primaryColor,),
-              title: Text("Change Language",style: TextStyle(color: AppColor.primaryColor),),
+              title: Text("38".tr,style: TextStyle(color: AppColor.primaryColor),),
               onTap: () {
               
                 Navigator.pop(context); 
@@ -361,7 +361,7 @@ class ProfilePage extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(Icons.dark_mode,color: AppColor.primaryColor,),
-              title: Text("Dark/Light Mode",style: TextStyle(color: AppColor.primaryColor),),
+              title: Text("39".tr,style: TextStyle(color: AppColor.primaryColor),),
               onTap: () {
                 
                 Navigator.pop(context); 
@@ -376,12 +376,12 @@ class ProfilePage extends StatelessWidget {
 
                     ProfileItem(
                       icon: Icons.privacy_tip,
-                      label: "Privacy Policy",
+                      label: "44".tr,
                     ),
-                    ProfileItem(icon: Icons.contact_mail, label: "Contact Us"),
+                    ProfileItem(icon: Icons.contact_mail, label: "43".tr),
                     ProfileItem(
                       icon: Icons.logout,
-                      label: "Logout",
+                      label: "47".tr,
                       onTap: () {
                         controller.logout();
                       },

@@ -12,7 +12,8 @@ class DioHelper {
   static void init() {
     dioClient = dio.Dio(
       dio.BaseOptions(
-        baseUrl: "http://10.0.2.2:8000",
+        baseUrl: 'https://massaclinic.softup.agency/public/',
+        //"https://massaclinic.softup.agency/public/",
         connectTimeout: Duration(seconds: 50),
         validateStatus: (status) => true,
         receiveDataWhenStatusError: false,
@@ -57,6 +58,8 @@ class DioHelper {
       return null;
     }
   }
+
+  
 
   /// POST request without token
   Future<dio.Response?> postData({

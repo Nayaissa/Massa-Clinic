@@ -5,9 +5,12 @@ import 'package:massaclinic/controller/services/favorite_services_controller.dar
 import 'package:massaclinic/core/class/statusrequest.dart';
 import 'package:massaclinic/core/constant/AppColor.dart';
 import 'package:massaclinic/core/constant/AppImagesAssets.dart';
-import 'package:massaclinic/view/widget/Favorite&search/customsearch.dart';
+import 'package:massaclinic/view/widget/Favorite&search/customFavorite.dart';
 import 'package:massaclinic/view/widget/reservation/customappar.dart';
-
+List<String> subImages =[
+ 'assets/images/botoksface.jpeg',
+  'assets/images/fillerface.jpeg',
+];
 class FavoriteScreen extends StatelessWidget {
   const FavoriteScreen({super.key});
 
@@ -43,13 +46,13 @@ class FavoriteScreen extends StatelessWidget {
                       itemBuilder: (context, index) {
                         final item = controller.favoriteModel?.data?[index];
 
-                        return CustomSerach(
-                          imageUrl:
-                              item?.image?.replaceAll(
-                                '127.0.0.1',
-                                '10.0.2.2',
-                              ) ??
-                              'assets/images/doctor1.jpg',
+                        return CustomFavorite(
+                          imageUrl:subImages[index],
+                              // item?.image?.replaceAll(
+                              //   'http://127.0.0.1',
+                              //   'https://massaclinic.softup.agency/public/',
+                              // ) ??
+                              // 'assets/images/doctor1.jpg',
                           title: item?.name ?? 'hhhh',
                           subtitle: '${item?.price} \$',
                           onPressedFav: () {

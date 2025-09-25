@@ -115,7 +115,7 @@ class EditProfileControllerImp extends EditProfileController {
       });
 
       final response = await DioHelper.dioClient!.post(
-        'http://10.0.2.2:8000/api/profile/update',
+        '/api/profile/update',
         data: formData,
         options: dio.Options(
           headers: {

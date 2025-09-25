@@ -77,7 +77,7 @@ class Doctors {
     email = json['email'];
     address = json['address'];
     imageDoctor = json['image_Doctor'];
-    image = imageDoctor?.replaceAll('127.0.0.1', '192.168.11.177');
+    image = imageDoctor?.replaceAll('http://127.0.0.1', 'https://massaclinic.softup.agency/public/');
     deletedAt = json['deleted_at'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];

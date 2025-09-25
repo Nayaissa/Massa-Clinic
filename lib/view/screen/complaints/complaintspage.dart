@@ -15,8 +15,86 @@ class ComplaintPage extends StatelessWidget {
   const ComplaintPage({super.key});
   @override
   Widget build(BuildContext context) {
-    Get.put(ComlaintControllerImp());
+   ComlaintControllerImp controllerImp= Get.put(ComlaintControllerImp());
 
+void showEditDialog(BuildContext context, ComlaintControllerImp controller, String complaintId, String currentContent) {
+  TextEditingController editController = TextEditingController(text: currentContent);
+
+ showDialog(
+  context: context,
+  builder: (context) {
+    return Dialog(
+      // backgroundColor: AppColor.thirdColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20), 
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text(
+              "Edit Complaint",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 15),
+            TextField(
+              controller: editController,
+              maxLines: 4,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.grey[100],
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                  borderSide: BorderSide.none,
+                ),
+                hintText: "Enter new content",
+                
+              ),
+            ),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
+                  onPressed: () => Get.back(),
+                  child: const Text(
+                    "Cancel",
+                    style: TextStyle(fontSize: 16,color:AppColor.primaryColor),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    controllerImp.editComplaint(complaintId, editController.text);
+                    Get.back();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColor.thirdColor, 
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    elevation: 3,
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  ),
+                  child: const Text(
+                    "Save",
+                    style: TextStyle(fontSize: 16, color: AppColor.primaryColor),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  },
+);
+
+}
     return Scaffold(
       backgroundColor: AppColor.backgroundColor,
 
@@ -25,7 +103,7 @@ class ComplaintPage extends StatelessWidget {
           children: [
             CustomApparReservation(
               icon: Icons.arrow_back_ios_new_outlined,
-              title: 'Complaints',
+              title: '92'.tr,
             ),
             Expanded(
               child: SingleChildScrollView(
@@ -39,7 +117,7 @@ class ComplaintPage extends StatelessWidget {
                           onPressed: () {
                             Get.toNamed(AppRoute.addcomplaints);
                           },
-                          text: 'New Complaint',
+                          text: '141'.tr,
                           colorbutton: AppColor.thirdColor,
                         ),
                         const SizedBox(height: 16),
@@ -82,6 +160,10 @@ class ComplaintPage extends StatelessWidget {
                                     controller.deleteComplaints(
                                       item.id.toString(),
                                     );
+                                  },
+                                  onEdit: () {
+                                 showEditDialog(context, controller, item.id.toString(), item.content!);
+
                                   },
                                 );
                               },

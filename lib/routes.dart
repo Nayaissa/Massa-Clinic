@@ -12,6 +12,8 @@ import 'package:massaclinic/view/screen/auth/Forgetpassword/verfiy_code.dart';
 import 'package:massaclinic/view/screen/auth/login.dart';
 import 'package:massaclinic/view/screen/auth/sign_up.dart';
 import 'package:massaclinic/view/screen/auth/success_reset_password.dart';
+import 'package:massaclinic/view/screen/auth/success_signup.dart';
+import 'package:massaclinic/view/screen/change_password.dart';
 import 'package:massaclinic/view/screen/complaints/add_complaints.dart';
 import 'package:massaclinic/view/screen/complaints/complaintspage.dart';
 import 'package:massaclinic/view/screen/favorite.dart';
@@ -22,10 +24,14 @@ import 'package:massaclinic/view/screen/profile/edit_profile.dart';
 import 'package:massaclinic/view/screen/profile/profile.dart';
 import 'package:massaclinic/view/screen/services.dart/details_sevices.dart';
 import 'package:massaclinic/view/screen/services.dart/services_page.dart';
+import 'package:massaclinic/view/screen/payment/payment_screen.dart';
+import 'package:massaclinic/view/screen/splash_screen.dart';
 
 List<GetPage<dynamic>>? getPages = [
   // intro.....
-  GetPage(name: '/', page: () => OnBoarding(), middlewares: [MyMiddleWare()]),
+  GetPage(name: '/', page: () => SplashScreen(), middlewares: [MyMiddleWare()]),
+  // Auth
+    GetPage(name: AppRoute.onBoarding, page: () => OnBoarding()),
   // Auth
   GetPage(name: AppRoute.login, page: () => LoginScreen()),
   GetPage(name: AppRoute.signUp, page: () => SignupScreen()),
@@ -35,7 +41,7 @@ List<GetPage<dynamic>>? getPages = [
   // GetPage(name: AppRoute.verfiyCodeSignUp, page: () => VerfiyCodeSignUp()),
   GetPage(name: AppRoute.resetPassword, page: () => ResetPasswordScreen()),
   GetPage(name: AppRoute.successReset, page: () => SuccessResetPassword()),
-  // GetPage(name: AppRoute.successSignUp, page: () => SuccessSignUp()),
+  GetPage(name: AppRoute.successSignUp, page: () => SuccessSignUp()),
   GetPage(name: AppRoute.onBoarding, page: () => OnBoarding()),
   // //Home
   GetPage(name: AppRoute.homepage, page: () => HomeScreen()),
@@ -68,6 +74,9 @@ List<GetPage<dynamic>>? getPages = [
 //======================Notification=========================
   GetPage(name: AppRoute.notification, page: () => NotificationPage()),
 
+//======================Payment=========================
+  GetPage(name: AppRoute.payment, page: () => PaymentScreen()),
+GetPage(name: AppRoute.changepassword, page:()=> ChangePasswordScreen() )
 
 ];
 // Map<String, Widget Function(BuildContext)> routes = {

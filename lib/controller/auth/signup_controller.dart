@@ -66,7 +66,6 @@ class SignUpControllerImp extends SignUpController {
   }
 
   @override
-  @override
 SignUp() async {
   var formdata = formstate.currentState;
   if (formdata!.validate()) {
@@ -74,7 +73,6 @@ SignUp() async {
     update();
 
     try {
-      // بناء الفورم داتا
       dio.FormData formData = dio.FormData.fromMap({
         "name": userName.text.trim(),
         "email": email.text.trim(),
@@ -90,32 +88,31 @@ SignUp() async {
       });
 
       final response = await DioHelper.dioClient!.post(
-        'http://10.0.2.2:8000/api/register-user',
+        '/api/register-user',
         data: formData,
         options: dio.Options(
           headers: {
             "Accept": "application/json",
-            // لا تحدد Content-Type، Dio يضيفه تلقائياً مع boundary
           },
-          validateStatus: (status) => true, // عشان ما يرمي استثناء
+          validateStatus: (status) => true, 
         ),
       );
 
-      print("🔵 Status: ${response.statusCode}");
-      print("🔵 Data: ${response.data}");
+      print(" Status: ${response.statusCode}");
+      print("Data: ${response.data}");
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         loginModel = LoginModel.fromJson(response.data);
         statusRequest = StatusRequest.success;
         Get.snackbar('Congratulations', loginModel!.message!);
-        Get.offNamed(AppRoute.successReset);
+        Get.offNamed(AppRoute.successSignUp);
       } else {
         registerModel = RegisterModel.fromJson(response.data);
         statusRequest = StatusRequest.failure;
         Get.snackbar('Warning', registerModel!.message ?? "Unknown error");
       }
     } catch (e) {
-      print("❌ Error during signup: $e");
+      print("Error during signup: $e");
       statusRequest = StatusRequest.serverfailure;
     }
 

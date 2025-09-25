@@ -104,4 +104,31 @@ class ComlaintControllerImp extends ComlaintController {
           update();
         });
   }
+  
+  editComplaint(String id, String newContent) {
+    addStatusRequest = StatusRequest.loading;
+    update();
+
+    DioHelper.putData(
+          url: '/api/EditComplaint/$id',
+          query: {'content': newContent},
+          data: {},
+        )
+        .then((value) {
+          if (value!.statusCode == 200) {
+            addStatusRequest = StatusRequest.success;
+            showComplaints();
+            update();
+            Get.snackbar("Success", "Complaint updated successfully");
+          } else {
+            addStatusRequest = StatusRequest.noData;
+            Get.snackbar("Error", "Failed to update complaint");
+          }
+        })
+        .catchError((error) {
+          addStatusRequest = StatusRequest.serverfailure;
+          update();
+          Get.snackbar("Error", error.toString());
+        });
+  }
 }

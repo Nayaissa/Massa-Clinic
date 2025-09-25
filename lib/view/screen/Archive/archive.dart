@@ -11,6 +11,33 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 
 enum SessionStatus { completed, confirmed, notCompleted ,pending}
 
+// class SessionModel {
+//   final String name;
+//   final double price;
+//   final SessionStatus status;
+
+//   SessionModel({required this.name, required this.price, required this.status});
+// }
+
+// List<SessionModel> sessions = [
+//   SessionModel(name: 'Session 1', price: 100, status: SessionStatus.completed),
+//   SessionModel(name: 'Session 2', price: 100, status: SessionStatus.confirmed),
+//   SessionModel(
+//     name: 'Session 3',
+//     price: 100,
+//     status: SessionStatus.notCompleted,
+//   ),
+//   SessionModel(
+//     name: 'Session 4',
+//     price: 100,
+//     status: SessionStatus.notCompleted,
+//   ),
+//   SessionModel(
+//     name: 'Session 5',
+//     price: 100,
+//     status: SessionStatus.notCompleted,
+//   ),
+// ];
 
 
 class ArchivePage extends StatelessWidget {

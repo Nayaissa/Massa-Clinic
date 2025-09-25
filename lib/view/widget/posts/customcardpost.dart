@@ -106,8 +106,8 @@ class CustomCardPost extends GetView<PostsControllerImp> {
                     onPageChanged: (i) => controller.changeImageIndex(i),
                     itemBuilder: (context, imageIndex) {
                       final imageUrl = dataPost!.images![imageIndex].replaceAll(
-                        '127.0.0.1',
-                        '192.168.11.177',
+                        'http://127.0.0.1',
+                        'https://massaclinic.softup.agency/public/',
                       );
 
                       return CachedNetworkImage(
@@ -167,7 +167,7 @@ class CustomCardPost extends GetView<PostsControllerImp> {
                         onTap: () {
                           final imageUrl = dataPost!
                               .images![controller.currentImageIndex]
-                              .replaceAll('127.0.0.1', '192.168.11.177');
+                              .replaceAll('http://127.0.0.1', 'https://massaclinic.softup.agency/public/');
 
                           showDialog(
                             context: context,

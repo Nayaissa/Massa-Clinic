@@ -39,7 +39,7 @@ class ListCategoriesHome extends GetView<HomeControllerImp> {
               return SizedBox(width: 10);
             },
             itemCount:
-                controller.mostPuplarServicesModel!.popularServices!.length,
+                controller.mostPuplarServicesModel                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       !.popularServices!.length,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               return Categories(
@@ -48,8 +48,8 @@ class ListCategoriesHome extends GetView<HomeControllerImp> {
                 itemName:
                     controller
                         .mostPuplarServicesModel!
-                        .popularServices![index]
-                        .name,
+                        .popularServices![index].serviceName
+                        ,
               );
             },
           ),

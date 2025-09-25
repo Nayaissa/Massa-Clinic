@@ -39,12 +39,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       locale: controller.language,
       translations: MyTranslation(), 
-      
-  // locale: controller.language ?? Locale('en'),
-  fallbackLocale: Locale('en'),   
+      fallbackLocale: Locale('en'),   
       theme: controller.appTheme,
       initialBinding: InitialBinding(),
-    //  home: SplashScreen(),
+      initialRoute: '/',
       getPages: getPages,
     );
   }

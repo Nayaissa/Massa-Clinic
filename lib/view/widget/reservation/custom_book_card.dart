@@ -5,6 +5,7 @@ import 'package:massaclinic/controller/myreservation_controller.dart';
 import 'package:massaclinic/core/constant/AppColor.dart';
 import 'package:massaclinic/data/model/reservation_model.dart';
 import 'package:massaclinic/view/widget/reservation/custom_text.dart';
+import 'package:massaclinic/view/screen/payment/payment_flow_screen.dart';
 
 class CustomBookCard extends GetView<BookingsController> {
   const CustomBookCard({super.key, required this.booking});
@@ -13,13 +14,16 @@ class CustomBookCard extends GetView<BookingsController> {
   Widget build(BuildContext context) {
     final isUpcoming = booking.status == 'pending';
     final isCompleted = booking.status == 'confirmed';
+    final isOverdue = booking.status == 'overdue';
     // add color
     Color statusColor =
         isUpcoming
             ? Colors.orangeAccent
             : isCompleted
             ? Colors.green
-            : Colors.red;
+            : isOverdue
+            ? Colors.red
+            : Colors.grey;
 
     // DateTime? dateTime;
     // try {
@@ -134,6 +138,68 @@ class CustomBookCard extends GetView<BookingsController> {
             ],
           ),
 
+          // Payment information for overdue reservations
+          if (isOverdue && booking.paymentInfo != null) ...[
+            SizedBox(height: 12),
+            Container(
+              padding: EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.red.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: Colors.red.withOpacity(0.3)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.payment, color: Colors.red, size: 20),
+                      SizedBox(width: 8),
+                      Text(
+                        'Payment Required',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Required Amount:', style: TextStyle(fontWeight: FontWeight.w600)),
+                      Text('${booking.paymentInfo!.requiredAmount} SY', 
+                           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red)),
+                    ],
+                  ),
+                  SizedBox(height: 4),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Your Balance:', style: TextStyle(fontWeight: FontWeight.w600)),
+                      Text('${booking.paymentInfo!.userBalance} SY', 
+                           style: TextStyle(fontWeight: FontWeight.bold, 
+                           color: booking.paymentInfo!.canAfford! ? Colors.green : Colors.red)),
+                    ],
+                  ),
+                  if (booking.paymentInfo!.shortfall! > 0) ...[
+                    SizedBox(height: 4),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Shortfall:', style: TextStyle(fontWeight: FontWeight.w600)),
+                        Text('${booking.paymentInfo!.shortfall} SY', 
+                             style: TextStyle(fontWeight: FontWeight.bold, color: Colors.orange)),
+                      ],
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ],
+
           SizedBox(height: 16),
           Row(
             children: [
@@ -209,6 +275,39 @@ class CustomBookCard extends GetView<BookingsController> {
                     ),
                   ),
                 ),
+              ] else if (booking.status == 'overdue') ...[
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: () {
+                      controller.cancleReservationPending(
+                        booking.reservationId.toString(),
+                      );
+                    },
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(color: AppColor.primaryColor),
+                    ),
+                    child: Text(
+                      "Cancel Booking",
+                      style: TextStyle(color: AppColor.primaryColor),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 12),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      _handleOverduePayment(context, booking);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                      padding: EdgeInsets.symmetric(vertical: 8),
+                    ),
+                    child: Text(
+                      "Pay Now",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
               ] else if (booking.status == 'canceled') ...[
                 Expanded(
                   child: ElevatedButton(
@@ -229,6 +328,25 @@ class CustomBookCard extends GetView<BookingsController> {
         ],
       ),
     );
+  }
+
+  void _handleOverduePayment(BuildContext context, Data booking) {
+    if (booking.paymentInfo?.canAfford == true) {
+      // User has sufficient balance, proceed with direct payment
+      controller.payForOverdueReservation(booking.reservationId.toString());
+    } else {
+      // User has insufficient balance, navigate to payment flow
+      Get.to(() => PaymentFlowScreen(
+        servicePrice: booking.paymentInfo?.requiredAmount ?? booking.sessionPrice ?? 0.0,
+        serviceName: booking.serviceName ?? 'Service',
+        reservationId: booking.reservationId,
+        onPaymentSuccess: () {
+          // Refresh the reservations list after successful payment
+          controller.getReservation('overdue');
+          controller.getReservation('confirmed');
+        },
+      ));
+    }
   }
 }
 

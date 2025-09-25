@@ -5,10 +5,11 @@ import 'package:massaclinic/controller/auth/signup_controller.dart';
 import 'package:massaclinic/core/constant/AppColor.dart';
 
 class CustomAppar extends GetView<SignUpControllerImp> {
-  const CustomAppar( {super.key, required this.radius, required this.image ,required this.colorcon,});
+  const CustomAppar( {super.key, required this.radius, required this.image ,required this.colorcon,required this.coloriconcam});
   final double radius;
   final String image;
   final Color colorcon;
+  final Color coloriconcam;
 
   @override
   Widget build(BuildContext context) {
@@ -173,7 +174,7 @@ class CustomAppar extends GetView<SignUpControllerImp> {
                         child: Icon(
                             Icons.camera_alt,
                             size: 16,
-                            color: Colors.white,
+                            color:coloriconcam,
                           
                         ),
                       ),

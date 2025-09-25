@@ -1,9 +1,9 @@
 class AppLink {
-  static const String severNamer = 'http://10.0.2.2:8000/api';
+  static const String severNamer = 'https://massaclinic.softup.agency/public//api';
   static const String test = '$severNamer/';
 
   // image=================================
-  static const String imagebaseurl = 'http://10.0.2.2/ecommerce/upload';
+  static const String imagebaseurl = 'https://massaclinic.softup.agency/public//storage';
 
   static const String categories = '$imagebaseurl/categories';
   static const String items = '$imagebaseurl/items';

@@ -36,7 +36,7 @@ class Data {
     id = json['id'];
     userName = json['user_name'];
     userImage = json['user_image'];
-    image = userImage!.replaceAll('127.0.0.1', '10.0.2.2');
+    image = userImage!.replaceAll('http://127.0.0.1', 'https://massaclinic.softup.agency/public/');
     content = json['content'];
     createdAt = json['created_at'];
   }

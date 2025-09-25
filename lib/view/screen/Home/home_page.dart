@@ -20,7 +20,7 @@ class HomePage extends StatelessWidget {
           child: ListView(
             children: [
               Customapparhome(
-               title: 'search here',
+               title: '87'.tr,
   prefixIcon: Icons.search_outlined,
   onPressed: () {},
   onPressedsearch: () {},
@@ -28,12 +28,19 @@ class HomePage extends StatelessWidget {
     controller.goToFav();
   },
               ),
-              CustomCard(title: 'summer ckeck', subtitle: 'Check discount'),
-
-              Customtitlehome(title: 'most puplar'),
+              // CustomCard(title: '88'.tr, subtitle: '89'.tr),
+CustomCarousel(
+            images: [
+              "assets/images/calouser1.jpg",
+              "assets/images/calouser2.jpg",
+              "assets/images/calouser3.jpg",
+              // "assets/images/image4.jpg",
+            ],
+          ),
+              Customtitlehome(title: '90'.tr),
               ListCategoriesHome(),
               
-              Customtitlehome(title: 'All Services'),
+              Customtitlehome(title: '91'.tr),
 
               Card(
                 color: AppColor.backgroundColor,
@@ -54,27 +61,27 @@ class HomePage extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final List<Map<String, String>> items = [
                       {
-                        'title': 'Complaits',
+                        'title': '92'.tr,
                         'svgPath': 'assets/images/Complaints.png',
                       },
                       {
-                        'title': 'Archive',
+                        'title': '93'.tr,
                         'svgPath': 'assets/images/Archive.png',
                       },
                       {
-                        'title': 'Services',
+                        'title': '94'.tr,
                         'svgPath': 'assets/images/sevices.png',
                       },
                       {
-                        'title': 'Reservation',
+                        'title': '95'.tr,
                         'svgPath': 'assets/images/Reservations.png',
                       },
                       {
-                        'title': 'Adverts',
+                        'title': '96'.tr,
                         'svgPath': 'assets/images/Advertisements.png',
                       },
                       {
-                        'title': 'Payments',
+                        'title': '97'.tr,
                         'svgPath': 'assets/images/Payment.png',
                       },
                     ];

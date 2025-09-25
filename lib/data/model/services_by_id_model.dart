@@ -21,7 +21,6 @@ class ServicesModelById {
   }
 }
 
-
 class Services {
   int? id;
   int? classificationId;
@@ -33,6 +32,7 @@ class Services {
   String? createdAt;
   String? updatedAt;
   int? is_favorite;
+  int? total_sessions;
 
   Services({
     this.id,
@@ -45,6 +45,7 @@ class Services {
     this.createdAt,
     this.updatedAt,
     this.is_favorite,
+    this.total_sessions,
   });
 
   Services.fromJson(Map<String, dynamic> json) {
@@ -52,12 +53,13 @@ class Services {
     classificationId = json['classification_id'];
     name = json['name'];
     image = json['image'];
-    imageUp = image!.replaceAll('127.0.0.1', '192.168.11.177');
+    imageUp = image!.replaceAll('http://127.0.0.1', 'https://massaclinic.softup.agency/public/');
     price = json['price'];
     description = json['description'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     is_favorite = json['is_favorite'];
+    total_sessions = json['total_sessions'];
   }
 
   Map<String, dynamic> toJson() {

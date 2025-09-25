@@ -29,7 +29,8 @@ class Data {
   String? classificationName;
   int? sessionId;
   String? sessionName;
-  int? sessionPrice;
+  double? sessionPrice;
+  PaymentInfo? paymentInfo;
   Time? time;
   Buttons? buttons;
 
@@ -42,6 +43,7 @@ class Data {
       this.sessionId,
       this.sessionName,
       this.sessionPrice,
+      this.paymentInfo,
       this.time,
       this.buttons});
 
@@ -53,10 +55,20 @@ class Data {
     classificationName = json['classification_name'];
     sessionId = json['session_id'];
     sessionName = json['session_name'];
-    sessionPrice = json['session_price'];
+    sessionPrice = _parseDouble(json['session_price']);
+    paymentInfo = json['payment_info'] != null ? new PaymentInfo.fromJson(json['payment_info']) : null;
     time = json['time'] != null ? new Time.fromJson(json['time']) : null;
     buttons =
         json['buttons'] != null ? new Buttons.fromJson(json['buttons']) : null;
+  }
+
+  // Helper method to safely parse double values from string or numeric
+  double? _parseDouble(dynamic value) {
+    if (value == null) return null;
+    if (value is double) return value;
+    if (value is int) return value.toDouble();
+    if (value is String) return double.tryParse(value);
+    return null;
   }
 
   Map<String, dynamic> toJson() {
@@ -69,6 +81,9 @@ class Data {
     data['session_id'] = this.sessionId;
     data['session_name'] = this.sessionName;
     data['session_price'] = this.sessionPrice;
+    if (this.paymentInfo != null) {
+      data['payment_info'] = this.paymentInfo!.toJson();
+    }
     if (this.time != null) {
       data['time'] = this.time!.toJson();
     }
@@ -116,6 +131,40 @@ class Buttons {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['confirm_enabled'] = this.confirmEnabled;
     data['cancel_enabled'] = this.cancelEnabled;
+    return data;
+  }
+}
+
+class PaymentInfo {
+  double? requiredAmount;
+  double? userBalance;
+  bool? canAfford;
+  double? shortfall;
+
+  PaymentInfo({this.requiredAmount, this.userBalance, this.canAfford, this.shortfall});
+
+  PaymentInfo.fromJson(Map<String, dynamic> json) {
+    requiredAmount = _parseDouble(json['required_amount']);
+    userBalance = _parseDouble(json['user_balance']);
+    canAfford = json['can_afford'];
+    shortfall = _parseDouble(json['shortfall']);
+  }
+
+  // Helper method to safely parse double values
+  double? _parseDouble(dynamic value) {
+    if (value == null) return null;
+    if (value is double) return value;
+    if (value is int) return value.toDouble();
+    if (value is String) return double.tryParse(value);
+    return null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['required_amount'] = this.requiredAmount;
+    data['user_balance'] = this.userBalance;
+    data['can_afford'] = this.canAfford;
+    data['shortfall'] = this.shortfall;
     return data;
   }
 }

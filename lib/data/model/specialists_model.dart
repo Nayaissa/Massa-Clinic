@@ -74,7 +74,7 @@ class Specialists {
     address = json['address'];
     imageSpecialist = json['image Specialist'];
      imageSpecialist = json['image Specialist'];
-  image = imageSpecialist?.replaceAll('127.0.0.1', '192.168.11.177');
+  image = imageSpecialist?.replaceAll('http://127.0.0.1', 'https://massaclinic.softup.agency/public/');
     deletedAt = json['deleted_at'];
   }
 

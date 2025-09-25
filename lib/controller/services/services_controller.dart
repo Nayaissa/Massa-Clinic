@@ -14,7 +14,7 @@ import 'package:massaclinic/data/model/unified_service_model.dart';
 
 abstract class ServicreController extends GetxController {
   void selectCategory(int index);
-  goToDetailsSer(String name, String image, String desc, String price,String id);
+  goToDetailsSer(String name, String image, String desc, String price,String id,int totalSession);
   getClass();
   getServices();
   getServicesById(int id);
@@ -114,14 +114,17 @@ class ServicreControllerImp extends ServicreController {
   }
 
   @override
-  goToDetailsSer(String name, String image, String desc, String price,String id) {
+
+  goToDetailsSer(String name, String image, String desc, String price,String id,int totalSession) {
     Get.put(DetailsServicreControllerImp());
     Get.find<DetailsServicreControllerImp>().setServiceDetails(
       name,
       image,
       desc,
       price,
-      id
+      id,
+      totalSession,
+      
     );
     Get.toNamed(AppRoute.detailsservicespage);
   }
@@ -175,11 +178,12 @@ class ServicreControllerImp extends ServicreController {
                     name: service.name ?? '',
                     image:
                         service.image!.startsWith("http")
-                            ? service.image!.replaceAll('127.0.0.1', '10.0.2.2')
-                            : "http://10.0.2.2:8000/storage/${service.image}",
+                            ? service.image!.replaceAll('http://127.0.0.1', 'https://massaclinic.softup.agency/public/')
+                            : "https://massaclinic.softup.agency/public/storage/${service.image}",
                     price: double.tryParse(service.price.toString()) ?? 0,
                     description: service.description ?? '',
                     is_Favorite: service.is_favorite!,
+                    total: service.total_sessions!
                   );
                 }).toList();
             servicesStatusRequest = StatusRequest.success;
@@ -212,11 +216,13 @@ class ServicreControllerImp extends ServicreController {
                     name: service.name ?? '',
                     image:
                         service.image!.startsWith("http")
-                            ? service.image!.replaceAll('127.0.0.1', '10.0.2.2')
-                            : "http://10.0.2.2:8000/storage/${service.image}",
+                            ? service.image!.replaceAll('http://127.0.0.1', 'https://massaclinic.softup.agency/public/')
+                            : "https://massaclinic.softup.agency/public/storage/${service.image}",
                     price: double.tryParse(service.price.toString()) ?? 0,
                     description: service.description ?? '',
                     is_Favorite: service.is_favorite!,
+                      total: service.total_sessions!
+
                   );
                 }).toList();
             servicesStatusRequest = StatusRequest.success;

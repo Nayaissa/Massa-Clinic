@@ -40,4 +40,9 @@ class AppRoute {
  // notification
   static const String notification = '/notification';
 
+  // payment
+  static const String payment = '/payment';
+    static const String changepassword = '/changepassword';
+
+
 }

@@ -48,7 +48,7 @@ class Data {
     serviceId = json['service_id'];
     serviceName = json['service_name'];
     serviceImage = json['service_image'];
-    image = serviceImage!.replaceAll('127.0.0.1', '10.0.2.2');
+    image = serviceImage!.replaceAll('http://127.0.0.1', 'https://massaclinic.softup.agency/public/');
     servicePrice = json['service_price'];
     totalSessions = json['total_sessions'];
     completedSessionsCount = json['completed_sessions_count'];

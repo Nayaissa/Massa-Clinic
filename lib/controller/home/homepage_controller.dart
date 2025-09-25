@@ -76,11 +76,10 @@ StatusRequest? statusRequestprofile;
   List<String> nav = [
     AppRoute.complaints,
     AppRoute.archive,
-
     AppRoute.servicespage,
     AppRoute.reservations,
     AppRoute.discount,
-    AppRoute.homepage,
+    AppRoute.payment,
   ];
 
   @override

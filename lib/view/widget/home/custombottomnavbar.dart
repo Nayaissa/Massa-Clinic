@@ -23,6 +23,7 @@ class CustomBottomNavBar extends GetView {
             color:AppColor.thirdColor,
             
          elevation: 3,
+          
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [

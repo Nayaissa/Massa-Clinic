@@ -27,12 +27,12 @@ class ResetPasswordScreen extends StatelessWidget {
                 children: [
                   SizedBox(height: 10),
                   CustomTextTitleAuth(
-                    text: 'Reset Password ',
+                    text: '23'.tr,
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 20),
                   CustomTextBodyAuth(
-                    textBody: 'Plaese Enter new Password and reWrite it',
+                    textBody: '24'.tr,
                   ),
                   SizedBox(height: 30),
 
@@ -49,8 +49,8 @@ class ResetPasswordScreen extends StatelessWidget {
                       return validInput(val!, 5, 30, 'password');
                     },
                     myController: controller.password,
-                    hintText: 'Enter Your Password',
-                    labelText: 'Password',
+                    hintText: '5'.tr,
+                    labelText: '5'.tr,
                     iconData: Icons.lock_outline,
                   ),
                   CustomTextFormFiled(
@@ -70,12 +70,12 @@ class ResetPasswordScreen extends StatelessWidget {
                       
                     },
                     myController: controller.passwordconfrim,
-                    hintText: 'ReEnter Your Password',
-                    labelText: 'Password',
+                    hintText: '25'.tr,
+                    labelText: '5'.tr,
                     iconData: Icons.lock_outline,
                   ),
                   CustomButtonAuth(
-                    textButton: 'Save',
+                    textButton: '26'.tr,
                     onPressed: () {
                       controller.goToSuccess();
                     },

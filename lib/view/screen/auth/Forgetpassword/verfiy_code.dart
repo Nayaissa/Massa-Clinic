@@ -20,11 +20,11 @@ class VerfiyCodeScreen extends StatelessWidget {
           children: [
             SizedBox(height: 10),
             CustomTextTitleAuth(
-              text: 'Verfiaction Code ',
+              text: '27'.tr,
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 20),
-            CustomTextBodyAuth(textBody: 'Plaese Enter Code That Reseve it'),
+            CustomTextBodyAuth(textBody: '28'.tr),
             SizedBox(height: 30),
 
             OtpTextField(

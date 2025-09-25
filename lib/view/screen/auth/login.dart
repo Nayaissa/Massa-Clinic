@@ -49,6 +49,7 @@ class LoginScreen extends StatelessWidget {
                                 radius: 0,
                                 image: AppImageAssets.logoImage,
                                 colorcon: AppColor.secondaryColor,
+                                coloriconcam: AppColor.backgroundColor,
                               ),
                               Container(
                                 padding: const EdgeInsets.symmetric(

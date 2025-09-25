@@ -28,7 +28,7 @@ class AddComplaintPage extends StatelessWidget {
                 controller.addComplaints();
               },
               child: Text(
-                'Submit Complaint',
+                '141'.tr,
                 style: TextStyle(fontSize: 16, color: AppColor.thirdColor),
               ),
             ),
@@ -40,7 +40,7 @@ class AddComplaintPage extends StatelessWidget {
               SizedBox(height: 20),
               CustomApparReservation(
                 icon: Icons.arrow_back_ios_new_outlined,
-                title: 'Add Complaints',
+                title: '141'.tr,
               ),
               Padding(
                 padding: const EdgeInsets.all(12),
@@ -48,7 +48,7 @@ class AddComplaintPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Complaint Details",
+                      "141".tr,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 22,
@@ -64,7 +64,7 @@ class AddComplaintPage extends StatelessWidget {
                         color: Colors.black87,
                       ),
                       decoration: InputDecoration(
-                        hintText: "Describe your complaint...",
+                        hintText: "144".tr,
                         hintStyle: TextStyle(
                           color: Colors.grey.shade500,
                           fontSize: 14,
