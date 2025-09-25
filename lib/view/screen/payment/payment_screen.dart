@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../controller/payment_controller.dart';
 import '../../../core/constant/AppColor.dart';
 import 'payment_request_screen.dart';
 import 'payment_history_screen.dart';

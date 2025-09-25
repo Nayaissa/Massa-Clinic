@@ -5,7 +5,6 @@ import 'package:dio/dio.dart' as dio;
 import 'package:flutter/foundation.dart';
 import '../core/class/diohelper.dart';
 import '../core/class/statusrequest.dart';
-import '../core/functons/handlingdata.dart';
 import '../core/services/services.dart';
 import '../data/model/payment_method_model.dart';
 import '../data/model/payment_model.dart';

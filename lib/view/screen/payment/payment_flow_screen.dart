@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:massaclinic/controller/payment_controller.dart';
 import 'package:massaclinic/core/constant/AppColor.dart';
-import 'package:massaclinic/core/constant/routes.dart';
 import 'package:massaclinic/core/class/statusrequest.dart';
 import 'package:massaclinic/view/widget/auth/CustomButtonAuth.dart';
 import 'package:massaclinic/view/widget/auth/CustomTextFormFiled.dart';

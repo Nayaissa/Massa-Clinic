@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:massaclinic/controller/services/details_services_controller.dart';
 import 'package:massaclinic/controller/myreservation_controller.dart';
 import 'package:massaclinic/core/constant/AppColor.dart';
-import 'package:massaclinic/core/class/statusrequest.dart';
 import 'package:massaclinic/view/widget/services/custom_doctor_card.dart';
 import 'package:massaclinic/view/widget/services/custom_text_deatils_service.dart';
 
@@ -12,11 +11,10 @@ class DetailsServices extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DetailsServicreControllerImp servicreControllerImp = Get.put(
+     Get.put(
       DetailsServicreControllerImp(),
     );
     Get.put(BookingsController());
-    final TextEditingController couponController = TextEditingController();
 
     return Scaffold(
       bottomNavigationBar: GetBuilder<DetailsServicreControllerImp>(
